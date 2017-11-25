@@ -10,27 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124231906) do
+ActiveRecord::Schema.define(version: 20171125010244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "movie_metadata", force: :cascade do |t|
+  create_table "box_office_days", force: :cascade do |t|
     t.integer "movie_id", null: false
-    t.date "for_day", null: false
+    t.date "day", null: false
     t.integer "metacritic_score"
     t.float "imdb_rating"
     t.integer "imdb_vote_count"
     t.string "tomato_consensus"
     t.integer "tomato_meter"
     t.integer "tomato_review_count"
-    t.integer "boxoffice_rank"
-    t.integer "boxoffice_daily_gross"
-    t.integer "boxoffice_theater_count"
-    t.integer "boxoffice_todate_gross"
+    t.integer "bomojo_rank"
+    t.integer "bomojo_daily_gross"
+    t.integer "bomojo_to_date_gross"
+    t.integer "bomojo_theater_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["movie_id", "for_day"], name: "index_movie_metadata_on_movie_id_and_for_day", unique: true
+    t.index ["movie_id", "day"], name: "index_box_office_days_on_movie_id_and_day", unique: true
   end
 
   create_table "movies", force: :cascade do |t|
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 20171124231906) do
     t.string "mpaa_rating"
     t.integer "runtime"
     t.string "imdb_id"
+    t.string "bomojo_id"
+    t.string "tomato_id"
+    t.string "metacritic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

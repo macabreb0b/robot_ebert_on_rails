@@ -13,6 +13,7 @@ gem 'pg', '~> 0.18'
 
 
 gem 'jquery-rails'
+gem 'kwstruct'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'

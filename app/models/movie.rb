@@ -1,8 +1,8 @@
 class Movie < ApplicationRecord
     has_many(
-        :metadata,
+        :box_office_days,
         primary_key: :id,
         foreign_key: :movie_id,
-        class_name: 'MovieMetadatum'
+        class_name: 'BoxOfficeDay'
     )
 end
