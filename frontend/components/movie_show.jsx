@@ -1,6 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ComposedChart, Line, Area, XAxis, YAxis, Tooltip } from 'recharts';
+import { 
+    ComposedChart, 
+    Line, 
+    Area, 
+    XAxis, 
+    YAxis, 
+    Tooltip, 
+    LineChart, 
+    AreaChart, 
+    Brush 
+} from 'recharts';
 
 
 const TiltedXAxisLabel = (props) => (
@@ -72,10 +82,10 @@ class MovieShow extends React.Component {
                             {boxOfficeDay.bomojo_rank} 
                         </td>
                         <td className="cell u-text--right">
-                            {'$' + boxOfficeDay.bomojo_daily_gross} 
+                            {_renderDollarsWithCommas(boxOfficeDay.bomojo_daily_gross)} 
                         </td>
                         <td className="cell u-text--right">
-                            {'$' + boxOfficeDay.bomojo_to_date_gross} 
+                            {_renderDollarsWithCommas(boxOfficeDay.bomojo_to_date_gross)} 
                         </td>
                     </tr>
                 )
@@ -105,7 +115,7 @@ class MovieShow extends React.Component {
                     </div>
 
                     <div className="chart-container" style={{position: 'relative'}}>
-                        <ComposedChart 
+                        <AreaChart 
                             width={800} 
                             height={400} 
                             data={sortedBoxOfficeDays}
@@ -113,9 +123,9 @@ class MovieShow extends React.Component {
 
                             <XAxis 
                                 dataKey="day" 
-                                interval={0} 
-                                domain={['dataMin', 'dataMax']}
-                                tick={<TiltedXAxisLabel />} />
+                                tick={<TiltedXAxisLabel />} 
+                                interval={0}
+                            />
 
                             <YAxis 
                                 type="number" 
@@ -123,18 +133,22 @@ class MovieShow extends React.Component {
                                 tick={<YAxisLabel />}
                             />
 
+                            <Tooltip />
                             <Area 
                                 type="monotone" 
                                 dataKey="bomojo_to_date_gross" 
                                 fill="#FFF8DC" 
-                                stroke="#FFF8DC" />
-                            <Line 
+                                stroke="#FFF8DC"
+                                strokewidth={2} />
+                            <Area 
                                 type="monotone" 
                                 dataKey="bomojo_daily_gross" 
                                 stroke="#8884d8" 
-                                strokewidth={2} />
-                            <Tooltip />
-                        </ComposedChart>
+                                strokewidth={2} 
+                                fillOpacity={0}/>
+
+                            
+                        </AreaChart>
                     </div>
 
                     <table className="table box-office-days">
