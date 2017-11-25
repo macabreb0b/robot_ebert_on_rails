@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  release_date: 2017-11-24
+  mpaa_rating: MyString
+  runtime: 1
+
+two:
+  title: MyString
+  release_date: 2017-11-24
+  mpaa_rating: MyString
+  runtime: 1
