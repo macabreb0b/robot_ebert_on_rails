@@ -1,5 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ComposedChart, Line, Area, XAxis, YAxis, Tooltip } from 'recharts';
+
+
+const TiltedXAxisLabel = (props) => (
+    <text 
+        x={props.x} 
+        y={props.y + 6.0} 
+        style={{
+            textAnchor: 'end'
+        }}
+        fill={'#666'}
+        transform={`rotate(-45 ${props.x} ${props.y})`}>
+
+        <tspan>{props.payload.value}</tspan>
+    </text>
+)
+
+function _renderDollarsWithCommas(amount) {
+    return "$" + amount.toLocaleString(
+        undefined,
+        { minimumFractionDigits: 0 }
+    );
+}
+
+const YAxisLabel = (props) => {
+    return (
+        <text
+            x={props.x}
+            y={props.y + 4}
+            fill={'#666'}
+            style={{
+                textAnchor: props.textAnchor
+            }}
+        >{_renderDollarsWithCommas(props.payload.value)}</text>
+    )
+}
+
 
 class MovieShow extends React.Component {
     componentDidMount() {
@@ -10,8 +47,10 @@ class MovieShow extends React.Component {
 
     render() {
         let boxOfficeDayRows = null;
+        let sortedBoxOfficeDays = [];
+
         if (this.props.movie.box_office_days) {
-            const sortedBoxOfficeDays = this.props.movie.box_office_days.sort(function(a, b) {
+            sortedBoxOfficeDays = this.props.movie.box_office_days.sort(function(a, b) {
                 return new Date(a.day) - new Date(b.day);
             })
             boxOfficeDayRows = sortedBoxOfficeDays.map((boxOfficeDay) => {
@@ -63,6 +102,39 @@ class MovieShow extends React.Component {
                         <span className="label">Rating:</span>
                         {' '}
                         <strong>{this.props.movie.mpaa_rating}</strong>
+                    </div>
+
+                    <div className="chart-container" style={{position: 'relative'}}>
+                        <ComposedChart 
+                            width={800} 
+                            height={400} 
+                            data={sortedBoxOfficeDays}
+                            margin={{top: 20, right: 0, bottom: 50, left: 50}}>
+
+                            <XAxis 
+                                dataKey="day" 
+                                interval={0} 
+                                domain={['dataMin', 'dataMax']}
+                                tick={<TiltedXAxisLabel />} />
+
+                            <YAxis 
+                                type="number" 
+                                domain={[0, 'dataMax']} 
+                                tick={<YAxisLabel />}
+                            />
+
+                            <Area 
+                                type="monotone" 
+                                dataKey="bomojo_to_date_gross" 
+                                fill="#FFF8DC" 
+                                stroke="#FFF8DC" />
+                            <Line 
+                                type="monotone" 
+                                dataKey="bomojo_daily_gross" 
+                                stroke="#8884d8" 
+                                strokewidth={2} />
+                            <Tooltip />
+                        </ComposedChart>
                     </div>
 
                     <table className="table box-office-days">
