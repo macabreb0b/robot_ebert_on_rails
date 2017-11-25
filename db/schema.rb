@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20171125010244) do
     t.integer "movie_id", null: false
     t.date "day", null: false
     t.integer "metacritic_score"
-    t.float "imdb_rating"
+    t.integer "imdb_rating"
     t.integer "imdb_vote_count"
     t.string "tomato_consensus"
     t.integer "tomato_meter"
@@ -36,12 +36,15 @@ ActiveRecord::Schema.define(version: 20171125010244) do
   create_table "movies", force: :cascade do |t|
     t.string "title", null: false
     t.date "release_date"
+    t.integer "year"
     t.string "mpaa_rating"
     t.integer "runtime"
     t.string "imdb_id"
     t.string "bomojo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["bomojo_id"], name: "index_movies_on_bomojo_id", unique: true
+    t.index ["imdb_id"], name: "index_movies_on_imdb_id", unique: true
   end
 
 end

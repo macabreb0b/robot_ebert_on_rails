@@ -6,7 +6,7 @@ class CreateBoxOfficeDays < ActiveRecord::Migration[5.1]
 
             t.integer :metacritic_score
 
-            t.float :imdb_rating
+            t.integer :imdb_rating
             t.integer :imdb_vote_count
 
             t.string :tomato_consensus
