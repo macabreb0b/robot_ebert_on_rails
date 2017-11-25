@@ -12,7 +12,7 @@ class Search extends React.Component {
         const movieListItems = this.props.movies.map((movie) => {
             return (
                 <li key={movie.bomojo_id}>
-                    <Link to={'/movies/' + movie.id}>
+                    <Link to={`/movies/${movie.id}`}>
                         {movie.title}
                     </Link>
                 </li>

@@ -11,7 +11,10 @@ class MovieShow extends React.Component {
     render() {
         let boxOfficeDayRows = null;
         if (this.props.movie.box_office_days) {
-            boxOfficeDayRows = this.props.movie.box_office_days.map((boxOfficeDay) => {
+            const sortedBoxOfficeDays = this.props.movie.box_office_days.sort(function(a, b) {
+                return new Date(a.day) - new Date(b.day);
+            })
+            boxOfficeDayRows = sortedBoxOfficeDays.map((boxOfficeDay) => {
                 return (
                     <tr className="row" key={boxOfficeDay.id}>
                         <td className="cell u-nowrap">
