@@ -1,7 +1,7 @@
 class Api::MoviesController < ApplicationController
     def index
         @movies = Movie.all
-        render json: @movies.to_json(include: :box_office_days)
+        render json: @movies.to_json
     end
 
     def show

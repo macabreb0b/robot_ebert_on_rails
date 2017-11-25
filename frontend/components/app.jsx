@@ -12,8 +12,8 @@ import MovieShowContainer from './movie_show_container';
 import SearchContainer from './search_container';
 
 const App = () => (
-    <div>
-        <header>
+    <div className="wrapper">
+        <header className="">
             <Link to="/">
                 <h1>Robot Ebert</h1>
             </Link>

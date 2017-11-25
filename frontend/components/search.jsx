@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Search extends React.Component {
     componentDidMount() {
-        if (!this.props.movies.length) {
+        if (this.props.movies.length < 4) {
             this.props.fetchMovies();
         }
     }
