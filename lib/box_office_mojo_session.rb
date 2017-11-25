@@ -12,7 +12,7 @@ BoxOfficeMojoRowData = KwStruct.new(
 )
 
 def daily_box_office_url(date)
-    # date is like 2017-11-23
+    # date is like '2017-11-23'
     return "http://www.boxofficemojo.com/daily/chart/?view=1day&sortdate=#{date}&p=.htm"
 end
 

@@ -40,8 +40,6 @@ ActiveRecord::Schema.define(version: 20171125010244) do
     t.integer "runtime"
     t.string "imdb_id"
     t.string "bomojo_id"
-    t.string "tomato_id"
-    t.string "metacritic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

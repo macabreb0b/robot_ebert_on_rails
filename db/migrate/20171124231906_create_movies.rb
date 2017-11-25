@@ -8,8 +8,6 @@ class CreateMovies < ActiveRecord::Migration[5.1]
 
             t.string :imdb_id
             t.string :bomojo_id
-            t.string :tomato_id
-            t.string :metacritic_id
 
             t.timestamps
         end
