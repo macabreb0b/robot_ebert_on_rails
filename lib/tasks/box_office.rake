@@ -1,6 +1,25 @@
+
+def render_fetching(bomojo_data, bomojo_rankings)
+    puts "Fetching: #{_fill_spaces(
+        bomojo_data.title, 
+        _longest_title_length(bomojo_rankings)
+    )} - daily gross: $#{bomojo_data.daily_gross}"
+end
+def _longest_title_length(bomojo_rankings)
+    @longest_title_length ||= bomojo_rankings.max_by { |row| row.title.length }.title.length
+end
+
+def _fill_spaces(title, longest_length)
+    missing_space = longest_length - title.length
+    return title + ' ' * missing_space
+end
+
+
+
 namespace :box_office do
     desc 'Fetch box office and rating data for given date'
     task :fetch_for_day, [:date] => :environment do |_, args|
+        puts "Fetching box office data for #{args[:date]}"
         # date should look like 2015-10-11
         box_office_mojo_rankings = BoxOfficeMojoSession.get_movie_data_for_date(
             args[:date]
@@ -58,19 +77,12 @@ namespace :box_office do
             movie.save!
         end
     end
-end
 
-def render_fetching(bomojo_data, bomojo_rankings)
-    puts "Fetching: #{_fill_spaces(
-        bomojo_data.title, 
-        _longest_title_length(bomojo_rankings)
-    )} - daily gross: $#{bomojo_data.daily_gross}"
-end
-def _longest_title_length(bomojo_rankings)
-    @longest_title_length ||= bomojo_rankings.max_by { |row| row.title.length }.title.length
-end
-
-def _fill_spaces(title, longest_length)
-    missing_space = longest_length - title.length
-    return title + ' ' * missing_space
+    desc 'Fetch for yesterday'
+    task :fetch_for_yesterday => :environment do 
+        # do some fudging for time zone and when box office is reported
+        yesterday = (DateTime.now - 8.hours - 1.day).to_date
+        time_string = yesterday.strftime("%Y-%m-%d")
+        Rake::Task['box_office:fetch_for_day'].invoke(time_string)
+    end
 end
