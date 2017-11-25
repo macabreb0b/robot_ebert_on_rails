@@ -20,7 +20,6 @@ namespace :box_office do
                 next
             end
 
-
             begin
                 # TODO - handle case where release date is different from "year"
                 # see "Leap! (2016)"
