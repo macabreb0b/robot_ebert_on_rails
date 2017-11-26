@@ -1,42 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-    ComposedChart, 
-    Line, 
-    Area, 
-    XAxis, 
-    YAxis, 
-    Tooltip, 
-    LineChart, 
-    AreaChart, 
-    Brush 
-} from 'recharts';
-import Spinner from 'react-spinkit';
-
-
-const TiltedXAxisLabel = (props) => (
-    <text 
-        x={props.x} 
-        y={props.y + 6.0} 
-        style={{
-            textAnchor: 'end'
-        }}
-        fill={'#666'}
-        transform={`rotate(-45 ${props.x} ${props.y})`}>
-
-        <tspan>{props.payload.value}</tspan>
-    </text>
-)
+import BoxOfficeChartContainer from './box_office_chart_container';
+import LoadingSpinner from './loading_spinner';
+import { _renderBoxOfficeDay, _renderDollarsWithCommas } from '../util/helpers'
 
 function _renderIMDBUrl(id) {
     return `https://www.imdb.com/title/${id}`
-}
-
-function _renderDollarsWithCommas(amount) {
-    return '$' + amount.toLocaleString(
-        undefined,
-        { minimumFractionDigits: 0 }
-    );
 }
 
 
@@ -50,16 +19,11 @@ class MovieShow extends React.Component {
     render() {
         const color = '#4DAF7C';
         let boxOfficeDayRows = (
-            <tr><td colSpan={7} style={{position: 'relative'}}>
-                <div className='spinner-container'>
-                    <Spinner name='line-scale-pulse-out' fadeIn={'quarter'} color='antiquewhite'/>
-                </div>
-            </td></tr>
-        );
-        let areaChart = (
-            <div className='spinner-container'>
-                <Spinner name='line-scale-pulse-out' fadeIn={'quarter'} color='antiquewhite'/>
-            </div>
+            <tr>
+                <td colSpan={7} style={{position: 'relative'}}>
+                    <LoadingSpinner />
+                </td>
+            </tr>
         );
 
         let sortedBoxOfficeDays = [];
@@ -72,7 +36,7 @@ class MovieShow extends React.Component {
                 return (
                     <tr className='row' key={boxOfficeDay.id}>
                         <td className='cell u-nowrap'>
-                            {boxOfficeDay.day}
+                            {_renderBoxOfficeDay(boxOfficeDay.day, this.props.movie.release_date)}
                         </td>
                         <td className='cell u-text--right'>
                             {boxOfficeDay.metacritic_score}
@@ -95,56 +59,18 @@ class MovieShow extends React.Component {
                     </tr>
                 )
             })
-
-            // don't render chart if we don't have data
-            areaChart = (
-                <AreaChart 
-                    width={800} 
-                    height={400} 
-                    data={sortedBoxOfficeDays}
-                    margin={{top: 20, right: 0, bottom: 50, left: 50}}>
-
-                    <XAxis 
-                        dataKey='day' 
-                        tick={<TiltedXAxisLabel />} 
-                        interval={'preserveStartEnd'}
-                    />
-
-                    <YAxis 
-                        type='number' 
-                        domain={[0, 'dataMax']} 
-                        tickFormatter={_renderDollarsWithCommas}
-                    />
-
-                    <Tooltip formatter={_renderDollarsWithCommas}/>
-                    <Area 
-                        type='monotone' 
-                        dataKey='bomojo_to_date_gross' 
-                        name='Box Office Earnings - Running Total'
-                        fill='#F06449'
-                        stroke='#F06449'
-                        strokewidth={2} 
-                        fillopacity={0.5} />
-
-                    <Area 
-                        type='monotone' 
-                        dataKey='bomojo_daily_gross' 
-                        name='Box Office Earnings - Single Day'
-                        stroke='#5BC3EB' 
-                        strokewidth={2} 
-                        fillOpacity={0} />
-
-                </AreaChart>
-            )
         }
 
         return (
             <div className=''>
-                <h2>{this.props.movie.title}</h2>
                 <Link to='/'>Back to Search / Index</Link>
-                <br />
-                <a href={_renderIMDBUrl(this.props.movie.imdb_id)}>
-                    view on imdb
+                <h2>
+                    {this.props.movie.title || "\u00a0"}
+                </h2>
+                <a 
+                    href={_renderIMDBUrl(this.props.movie.imdb_id)}
+                    target="_blank">
+                    <i className="fa fa-external-link" aria-hidden="true"></i> view on imdb 
                 </a>
                 <div className=''>
                     <div>
@@ -163,12 +89,9 @@ class MovieShow extends React.Component {
                         <strong>{this.props.movie.mpaa_rating}</strong>
                     </div>
 
-                    <div 
-                        className='chart-container' 
-                        style={{width: 800, height: 400, position: 'relative'}}>
-
-                        {areaChart}
-                    </div>
+                    <BoxOfficeChartContainer 
+                        movie={this.props.movie} 
+                        boxOfficeDays={sortedBoxOfficeDays} />
 
                     <table className='table box-office-days'>
                         <thead>
