@@ -5,6 +5,7 @@ def render_fetching(bomojo_data, bomojo_rankings)
         _longest_title_length(bomojo_rankings)
     )} - daily gross: $#{bomojo_data.daily_gross}"
 end
+
 def _longest_title_length(bomojo_rankings)
     @longest_title_length ||= bomojo_rankings.max_by { |row| row.title.length }.title.length
 end
@@ -43,7 +44,10 @@ namespace :box_office do
                 # TODO - handle case where release date is different from "year"
                 # see "Leap! (2016)"
                 omdb_data = OMDBSession.get_movie_data(bomojo_data.title)
-            rescue 
+            rescue ArgumentError => e
+                puts e
+                next
+            rescue
                 puts "skipping #{bomojo_data.title}"
                 next
             end
@@ -66,9 +70,7 @@ namespace :box_office do
                 metacritic_score: omdb_data.metacritic_rating,
                 imdb_rating: omdb_data.imdb_rating,
                 imdb_vote_count: omdb_data.imdb_vote_count,
-                tomato_consensus: omdb_data.tomato_consensus,
-                tomato_meter: omdb_data.tomato_meter,
-                tomato_review_count: omdb_data.tomato_review_count,
+                tomato_meter: omdb_data.tomato_rating,
                 bomojo_rank: bomojo_data.rank,
                 bomojo_daily_gross: bomojo_data.daily_gross,
                 bomojo_to_date_gross: bomojo_data.to_date_gross,

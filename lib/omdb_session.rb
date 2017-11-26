@@ -8,9 +8,7 @@ OMDBMetaData = KwStruct.new(
     :metacritic_rating,
     :imdb_vote_count,
     :imdb_rating,
-    :tomato_consensus,
-    :tomato_meter,
-    :tomato_review_count,
+    :tomato_rating,
     :year
 )
 
@@ -50,6 +48,10 @@ def parse_imdb_rating_to_int(imdb_rating)
     return Integer(Float(imdb_rating) * 10)
 end
 
+def parse_percent_string(number_string)
+    return Integer(number_string.gsub(/[\%]/, ''))
+end
+
 class OMDBSession
     def self.get_movie_data(bomojo_title)
         response = open(omdb_url(bomojo_title))
@@ -60,6 +62,12 @@ class OMDBSession
              # return empty omdb metadata object
             return OMDBMetaData.new
         end
+
+        tomato_rating_data = json_body['Ratings'].find do |rating| 
+            rating['Source'] == 'Rotten Tomatoes'
+        end
+        tomato_rating_string = tomato_rating_data ? 
+            parse_percent_string(tomato_rating_data['Value']) : nil
 
         return OMDBMetaData.new(
             mpaa_rating: json_body['Rated'],
@@ -76,13 +84,7 @@ class OMDBSession
             imdb_rating: parse_imdb_rating_to_int(
                 json_body['imdbRating']
             ),
-            tomato_consensus: json_body['tomatoConsensus'],
-            tomato_meter: parse_whole_number_string(
-                json_body['tomatoMeter']
-            ),
-            tomato_review_count: parse_whole_number_string(
-                json_body['tomatoReviews']
-            )
+            tomato_rating: tomato_rating_string
         )
     end
 end
