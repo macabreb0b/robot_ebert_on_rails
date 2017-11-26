@@ -10,6 +10,10 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader']
+      },
+      {
         test: [/\.jsx?$/, /\.js?$/],
         exclude: /node_modules/,
         loader: 'babel-loader',
@@ -17,6 +21,7 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       }
+
     ]
   },
   devtool: 'source-map',

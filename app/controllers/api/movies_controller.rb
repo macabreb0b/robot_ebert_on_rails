@@ -1,6 +1,6 @@
 class Api::MoviesController < ApplicationController
     def index
-        @movies = Movie.all
+        @movies = Movie.order(:release_date).all
         render json: @movies.to_json
     end
 

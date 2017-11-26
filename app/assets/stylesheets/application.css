@@ -21,10 +21,10 @@
     white-space: nowrap !important;
 }
 a {
-    color: white;
+    color: #EDE6E3;
 }
 a:visited {
-    color: antiquewhite;
+    color: #DADAD9;
 }
 
 body {
@@ -32,10 +32,12 @@ body {
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
-    color: #c1c1bf;
+    color: #EDE6E3;
+    
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
     background: #2b2b2b;
+    box-sizing: border-box;
 }
 
 .wrapper {
@@ -92,4 +94,20 @@ body {
         padding: 2px 12px;
         display: block;
     }
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    min-height: 100px;
 }
