@@ -1,7 +1,7 @@
 # README
 
 ## TODO
-* [] scraping is currently done in rake task w/ cron - see what recommended solution is for heroku
+* [✅] setup heroku cronjob
 * [] add tweet collection
 * [] add movie search
 * [] add ML model
