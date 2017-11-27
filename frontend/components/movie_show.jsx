@@ -54,6 +54,9 @@ class MovieShow extends React.Component {
                             {_renderDollarsWithCommas(boxOfficeDay.bomojo_daily_gross)} 
                         </td>
                         <td className='cell u-text--right'>
+                            {boxOfficeDay.bomojo_theater_count}
+                        </td>
+                        <td className='cell u-text--right'>
                             {_renderDollarsWithCommas(boxOfficeDay.bomojo_to_date_gross)} 
                         </td>
                     </tr>
@@ -113,6 +116,9 @@ class MovieShow extends React.Component {
                                 </td>
                                 <td className='cell'>
                                     Single Day Box Office
+                                </td>
+                                <td className='cell'>
+                                    Theater Count
                                 </td>
                                 <td className='cell'>
                                     Box Office Total
