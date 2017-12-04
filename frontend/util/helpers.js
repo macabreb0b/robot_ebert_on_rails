@@ -17,3 +17,5 @@ export function _renderBoxOfficeDay(day, movieReleaseDay) {
     }
     return day
 }
+
+

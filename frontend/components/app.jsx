@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 
 import MovieShowContainer from './movie_show_container';
-import SearchContainer from './search_container';
+import MovieIndexContainer from './movie_index_container';
 
 const App = () => (
     <div className="wrapper">
@@ -19,7 +19,7 @@ const App = () => (
             </Link>
         </header>
         <Switch>
-            <Route exact path="/" component={SearchContainer} />
+            <Route exact path="/" component={MovieIndexContainer} />
             <Route path="/movies/:movieId" component={MovieShowContainer} />
         </Switch>
     </div>

@@ -15,9 +15,9 @@ export const receiveMovie = movie => ({
 })
 
 export const fetchMovies = filters => dispatch => (
-  APIUtil.fetchMovies(filters).then(movies => (
-    dispatch(receiveMovies(movies))
-  ))
+  APIUtil.fetchMovies(filters).then(movies => {
+    return dispatch(receiveMovies(movies))
+  })
 );
 
 export const fetchMovie = id => dispatch => (
