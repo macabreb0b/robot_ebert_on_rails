@@ -1,83 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+function _fuzzyMatchItem(query, stringToMatch) {
+    const queryWithoutSpaces = query.replace(/\s/g, '')
+    const regexMatcher = new RegExp(query.split('').join('.*'), 'i')
 
-
-class MovieTypeaheadNode {
-    constructor(parent, value) {
-        this.value = value;
-        this.parent = parent;
-        this.children = [];
-        this.matchingMovies = [];
-    }
-
-    addChild(letter) {
-        let child = this.childWithValue(letter);
-
-        if (!child) {
-            child = new MovieTypeaheadNode(this, letter);
-            this.children.push(child);
-        }
-
-        return child;
-    }
-
-    childWithValue(letter) {
-        for (var idx in this.children) {
-            let child = this.children[idx];
-
-            if (child.value == letter) {
-                return child;
-            }
-        }
-        return null;
-    }
-
-    addMatchingMovie(movie) {
-        this.matchingMovies.push(movie)
-        if (this.parent) {
-            this.parent.addMatchingMovie(movie);
-        }
-    }
+    return stringToMatch.match(regexMatcher)
 }
 
-export class MovieTypeahead {
-    constructor(movieList) {
-        this.movieList = movieList;
-        this.rootNode = new MovieTypeaheadNode(null, '');
-
-        // fill words
-        movieList.forEach(movie => {
-            var currentNode = this.rootNode;
-
-            movie.title.toLowerCase().split('').forEach((letter, index) => { 
-                currentNode = currentNode.addChild(letter)
-
-                if (index == movie.title.length - 1) {
-                    // add '' node to indicate end of word
-                    currentNode.addChild('')
-
-                    // add word to this and all others in backwards path
-                    currentNode.addMatchingMovie(movie)
-                }
-            })
-
-        })
-    }
-
-    findMatchingMovies(query) {
-        var matches = [];
-        var currentNode = this.rootNode;
-        for (var idx = 0; idx < query.length; idx++) {
-            const letter = query[idx].toLowerCase();
-
-            currentNode = currentNode.childWithValue(letter)
-
-            if (currentNode == null) return [];
-        }
-
-        return currentNode.matchingMovies
-    }
+function _fuzzyMatchList(query, movieList) {
+    return movieList.filter(movie => (
+        _fuzzyMatchItem(query, movie.title)
+    ))
 }
 
 export class MovieIndex extends React.Component {
@@ -88,7 +22,7 @@ export class MovieIndex extends React.Component {
         this.state.query = ''
         this.state.didFetchMovies = false;
 
-        this.onTypeaheadChange = this.onTypeaheadChange.bind(this)
+        this.onSearchInputChange = this.onSearchInputChange.bind(this)
     }
 
     componentDidMount() {
@@ -100,14 +34,14 @@ export class MovieIndex extends React.Component {
         }
     }
     
-    onTypeaheadChange(event) {
+    onSearchInputChange(event) {
         this.setState({
             query: event.target.value
         })
     }
 
     render() {
-        const matchedMovies = this.props.movieTypeahead.findMatchingMovies(this.state.query)
+        const matchedMovies = _fuzzyMatchList(this.state.query, this.props.movies);
         const movieListItems = matchedMovies.map((movie) => {
             return (
                 <li key={movie.bomojo_id}>
@@ -121,7 +55,11 @@ export class MovieIndex extends React.Component {
         return (
             <div className="">
                 <h2>Search</h2>
-                <input type='text' onChange={this.onTypeaheadChange} value={this.state.query} />
+                <input 
+                    type='text' 
+                    onChange={this.onSearchInputChange} 
+                    value={this.state.query} />
+
                 <h2>Movies</h2>
                 <ul className="">
                     {movieListItems}
