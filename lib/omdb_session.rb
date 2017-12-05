@@ -5,10 +5,6 @@ OMDBMetaData = KwStruct.new(
     :release_date,
     :imdb_id,
     :runtime,
-    :metacritic_rating,
-    :imdb_vote_count,
-    :imdb_rating,
-    :tomato_rating,
     :year
 )
 
@@ -30,27 +26,26 @@ def omdb_url(
         y: year.to_i,
         r: 'json',
         plot: 'short',
-        tomatoes: true,
         apikey: ENV['OMDB_API_KEY']
     )
     return "http://www.omdbapi.com/?#{query}"
 end
 
-def parse_whole_number_string(number_string)
-    return nil if number_string == 'N/A'
+# def parse_whole_number_string(number_string)
+#     return nil if number_string == 'N/A'
 
-    return Integer(number_string.gsub(/[,$]/, ''))
-end
+#     return Integer(number_string.gsub(/[,$]/, ''))
+# end
 
-def parse_imdb_rating_to_int(imdb_rating)
-    return nil if imdb_rating == 'N/A'
+# def parse_imdb_rating_to_int(imdb_rating)
+#     return nil if imdb_rating == 'N/A'
 
-    return Integer(Float(imdb_rating) * 10)
-end
+#     return Integer(Float(imdb_rating) * 10)
+# end
 
-def parse_percent_string(number_string)
-    return Integer(number_string.gsub(/[\%]/, ''))
-end
+# def parse_percent_string(number_string)
+#     return Integer(number_string.gsub(/[\%]/, ''))
+# end
 
 class OMDBSession
     def self.get_movie_data(bomojo_title)
@@ -63,28 +58,12 @@ class OMDBSession
             return OMDBMetaData.new
         end
 
-        tomato_rating_data = json_body['Ratings'].find do |rating| 
-            rating['Source'] == 'Rotten Tomatoes'
-        end
-        tomato_rating_string = tomato_rating_data ? 
-            parse_percent_string(tomato_rating_data['Value']) : nil
-
         return OMDBMetaData.new(
             mpaa_rating: json_body['Rated'],
             year: Integer(json_body['Year']),
             release_date: Date.parse(json_body['Released']),
             imdb_id: json_body['imdbID'],
             runtime: json_body['Runtime'],
-            metacritic_rating: parse_whole_number_string(
-                json_body['Metascore']
-            ),
-            imdb_vote_count: parse_whole_number_string(
-                json_body['imdbVotes']
-            ),
-            imdb_rating: parse_imdb_rating_to_int(
-                json_body['imdbRating']
-            ),
-            tomato_rating: tomato_rating_string
         )
     end
 end

@@ -48,7 +48,7 @@ namespace :box_office do
                 puts e
                 next
             rescue
-                puts "skipping #{bomojo_data.title}"
+                puts "skipping box office day for #{bomojo_data.title}"
                 next
             end
 
@@ -65,12 +65,21 @@ namespace :box_office do
                 movie.save!
             end
 
+            begin
+                imdb_data = IMDBSession.get_movie_data(
+                    movie.imdb_id
+                )
+            rescue OpenURI::HTTPError => e
+                puts "skipping imdb for #{movie.title}"
+                next
+            end
+
             movie.box_office_days << BoxOfficeDay.new(
                 day: day,
-                metacritic_score: omdb_data.metacritic_rating,
-                imdb_rating: omdb_data.imdb_rating,
-                imdb_vote_count: omdb_data.imdb_vote_count,
-                tomato_meter: omdb_data.tomato_rating,
+                metacritic_score: imdb_data.metacritic_rating,
+                imdb_rating: imdb_data.imdb_rating,
+                imdb_vote_count: imdb_data.imdb_vote_count,
+                tomato_meter: nil,
                 bomojo_rank: bomojo_data.rank,
                 bomojo_daily_gross: bomojo_data.daily_gross,
                 bomojo_to_date_gross: bomojo_data.to_date_gross,
