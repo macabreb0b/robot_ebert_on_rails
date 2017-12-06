@@ -27,13 +27,13 @@ class IMDBSession
     def self.get_movie_data(imdb_id)
         movies_for_day = []
 
-        movie_details_html_body = open(imdb_movie_details_url(imdb_id))
-        parsed_movie_details_html_body = Nokogiri::HTML(movie_details_html_body)
+        response = open(imdb_movie_details_url(imdb_id))
+        movie_details_html = Nokogiri::HTML(response)
 
-        imdb_rating = parsed_movie_details_html_body.css(
+        imdb_rating = movie_details_html.css(
             '[itemprop="aggregateRating"] [itemprop="ratingValue"]'
         ).text
-        imdb_vote_count = parsed_movie_details_html_body.css(
+        imdb_vote_count = movie_details_html.css(
             '[itemprop="aggregateRating"] [itemprop="ratingCount"]'
         ).text
 

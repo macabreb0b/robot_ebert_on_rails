@@ -31,22 +31,6 @@ def omdb_url(
     return "http://www.omdbapi.com/?#{query}"
 end
 
-# def parse_whole_number_string(number_string)
-#     return nil if number_string == 'N/A'
-
-#     return Integer(number_string.gsub(/[,$]/, ''))
-# end
-
-# def parse_imdb_rating_to_int(imdb_rating)
-#     return nil if imdb_rating == 'N/A'
-
-#     return Integer(Float(imdb_rating) * 10)
-# end
-
-# def parse_percent_string(number_string)
-#     return Integer(number_string.gsub(/[\%]/, ''))
-# end
-
 class OMDBSession
     def self.get_movie_data(bomojo_title)
         response = open(omdb_url(bomojo_title))

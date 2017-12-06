@@ -74,12 +74,17 @@ namespace :box_office do
                 next
             end
 
+            rotten_tomatoes_data = RottenTomatoesSession.get_movie_data(
+                movie.title
+            )
+
             movie.box_office_days << BoxOfficeDay.new(
                 day: day,
                 metacritic_score: imdb_data.metacritic_rating,
                 imdb_rating: imdb_data.imdb_rating,
                 imdb_vote_count: imdb_data.imdb_vote_count,
-                tomato_meter: nil,
+                tomato_audience_score: rotten_tomatoes_data.audience_score,
+                tomato_meter: rotten_tomatoes_data.tomato_meter,
                 bomojo_rank: bomojo_data.rank,
                 bomojo_daily_gross: bomojo_data.daily_gross,
                 bomojo_to_date_gross: bomojo_data.to_date_gross,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125010244) do
+ActiveRecord::Schema.define(version: 20171206022409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20171125010244) do
     t.integer "bomojo_theater_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tomato_audience_score"
     t.index ["movie_id", "day"], name: "index_box_office_days_on_movie_id_and_day", unique: true
   end
 
