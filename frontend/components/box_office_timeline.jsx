@@ -82,6 +82,12 @@ class MovieToggleButton extends React.Component {
         })
     }
 
+    toggleMovie() {
+        this.setState({
+            isActive: !this.state.isActive
+        }, this.props.toggleMovie);
+    }
+
     render() {
         return (
             <a 
@@ -164,12 +170,13 @@ class BoxOfficeTimeline extends React.Component {
                         fill={lineColor}
                         strokewidth={2}
                         fillOpacity={0.1} 
-                        animationDuration={0}/>
+                        animationDuration={0} />
                 )
             }
 
             movieToggleButtons.push(
                 <MovieToggleButton 
+                    key={movie.id}
                     toggleMovie={() => (this.toggleMovie(movie.id))} 
                     isActive={this.state.movieToggles[movie.id]}
                     color={lineColor} 
@@ -217,7 +224,6 @@ class BoxOfficeTimeline extends React.Component {
                     <div 
                         className='chart-container' 
                         style={{
-                            width: '100%', 
                             height: 500, 
                             position: 'relative'
                         }}>
