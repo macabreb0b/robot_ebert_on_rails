@@ -64,6 +64,10 @@ function _makeChartData(boxOfficeDaysById) {
     })
 }
 
+const _getRandomId = movieIds => (
+    movieIds[Math.floor(Math.random() * movieIds.length)]
+)
+
 class BoxOfficeTimeline extends React.Component {
     constructor(props) {
         super(props)
@@ -80,7 +84,12 @@ class BoxOfficeTimeline extends React.Component {
             movieToggles[id] = false;
         })
         // pick a random movie to feature in the chart
-        const randomMovieId = movieIds[Math.floor(Math.random() * movieIds.length)];
+        let randomMovieId = _getRandomId(movieIds);
+        while (Object.values(boxOfficeDays).filter(boxOfficeDay => (
+            boxOfficeDay.movie_id == randomMovieId
+        )).length == 1) {
+            randomMovieId = _getRandomId(movieIds);
+        }
         movieToggles[randomMovieId] = true;
 
         this.setState({
