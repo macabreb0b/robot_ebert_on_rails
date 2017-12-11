@@ -1,7 +1,7 @@
 export const fetchMovies = data => (
   $.ajax({
     method: 'GET',
-    url: 'api/movies',
+    url: '/api/movies',
     data
   })
 );
@@ -9,6 +9,6 @@ export const fetchMovies = data => (
 export const fetchMovie = id => (
   $.ajax({
     method: 'GET',
-    url: `api/movies/${id}`
+    url: `/api/movies/${id}`
   })
 );

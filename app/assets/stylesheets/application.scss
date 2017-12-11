@@ -16,6 +16,7 @@
  
 @import "font-awesome-sprockets";
 @import "font-awesome";
+@import "suitcss-utils-flex/index.css";
 
 .u-text--right {
     text-align: right !important;
@@ -23,11 +24,17 @@
 .u-nowrap {
     white-space: nowrap !important;
 }
+
+$text-color: #EDE6E3;
+$text-color-visited: #DADAD9;
+$background-color: #2b2b2b;
+$white: #ffffff;
+
 a {
-    color: #EDE6E3;
+    color: $text-color;
 }
 a:visited {
-    color: #DADAD9;
+    color: $text-color-visited;
 }
 
 body {
@@ -35,17 +42,17 @@ body {
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
-    color: #EDE6E3;
+    color: $text-color;
 
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
-    background: #2b2b2b;
+    background: $background-color;
     box-sizing: border-box;
 }
 
 .wrapper {
     margin: 0 auto;
-    padding: 40px;
+    padding: 0 40px;
     max-width: 800px;
 }
 
@@ -77,16 +84,8 @@ body {
 
 .row.header {
     font-weight: 900;
-    color: #ffffff;
+    color: $white;
     background: #ea6153;
-}
-
-.row.green {
-    background: #27ae60;
-}
-
-.row.blue {
-    background: #2980b9;
 }
 
 .cell {
@@ -113,4 +112,26 @@ body {
     bottom: 0;
 
     min-height: 100px;
+}
+
+.flex_content {
+    margin-right: 10px;
+}
+
+.top-nav_item {
+    display: inline-block;
+    padding: 3px 6px;
+    border: thin solid $text-color;
+    border-radius: 6px;
+    text-decoration: none;
+}
+.top-nav_item:hover,
+.top-nav_item.active,
+.top-nav_item.active:hover {
+    color: $background-color;
+    background-color: $text-color;
+}
+
+.filter-movies_input {
+    width: 200px;
 }

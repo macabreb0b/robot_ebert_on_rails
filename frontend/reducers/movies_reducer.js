@@ -15,7 +15,7 @@ const moviesReducer = (state={}, action) => {
             action.movies.forEach(function(movie) {
                 moviesById[movie.id] = movie
             })
-            return moviesById
+            return merge({}, state, moviesById)
         case RECEIVE_MOVIE:
             const movie = action.movie;
             return merge({}, state, { [movie.id]: movie });

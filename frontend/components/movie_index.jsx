@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function _fuzzyMatchItem(query, stringToMatch) {
-    const queryWithoutSpaces = query.replace(/\s/g, '')
-    const regexMatcher = new RegExp(query.split('').join('.*'), 'i')
+    const regexSafeQuery = query.replace(/[^A-Za-z0-9]/g, '')
+    const regexMatcher = new RegExp(regexSafeQuery.split('').join('.*'), 'i')
 
     return stringToMatch.match(regexMatcher)
 }
@@ -20,7 +20,7 @@ export class MovieIndex extends React.Component {
 
         this.state = {}
         this.state.query = ''
-        this.state.didFetchMovies = false;
+        this.state.didFetchMovies = this.props.didFetchMovies;
 
         this.onSearchInputChange = this.onSearchInputChange.bind(this)
     }
@@ -53,14 +53,19 @@ export class MovieIndex extends React.Component {
         })
         
         return (
-            <div className="">
-                <h2>Search</h2>
-                <input 
-                    type='text' 
-                    onChange={this.onSearchInputChange} 
-                    value={this.state.query} />
+            <div className="wrapper">
+                <div className='filter-movies'>
+                    <h2>Filter movie list</h2>
+                    <input 
+                        type='text' 
+                        placeholder='Type here to filter movie list'
+                        onChange={this.onSearchInputChange} 
+                        value={this.state.query} 
+                        className='filter-movies_input'/>
+                </div>
+                <h2>Recent Movies</h2>
+                
 
-                <h2>Movies</h2>
                 <ul className="">
                     {movieListItems}
                 </ul>

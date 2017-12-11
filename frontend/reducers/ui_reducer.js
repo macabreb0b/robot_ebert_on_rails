@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 
 
 import {
-    RECEIVE_MOVIES,
+    DID_FETCH_MOVIES,
 } from '../actions/movie_actions';
 
 const uiReducer = (state={}, action) => {
@@ -10,7 +10,7 @@ const uiReducer = (state={}, action) => {
     let newState = merge({}, state);
 
     switch(action.type) {
-        case RECEIVE_MOVIES:
+        case DID_FETCH_MOVIES:
             newState.didFetchMovies = true
             return newState
         default:
