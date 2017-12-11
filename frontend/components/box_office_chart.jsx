@@ -28,7 +28,7 @@ class BoxOfficeChart extends React.Component {
                 <ResponsiveContainer>
                     <AreaChart 
                         data={this.props.boxOfficeDays}
-                        margin={{top: 20, right: 30, bottom: 50, left: 50}}>
+                        margin={{top: 20, right: 0, bottom: 50, left: 30}}>
 
                         <XAxis 
                             dataKey='day' 

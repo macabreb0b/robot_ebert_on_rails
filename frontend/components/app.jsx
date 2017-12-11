@@ -19,18 +19,9 @@ const App = () => (
             <header className='u-flex u-flexAlignItemsCenter'>
                 <div className='FlexItem'>
                     <div className='flex_content'>
-                        <h1>Robot Ebert</h1>
-                    </div>
-                </div>
-                <div className='FlexItem'>
-                    <div className='flex_content'>
-                        <NavLink 
-                            exact
-                            activeClassName='active' 
-                            className='top-nav_item' 
-                            to="/">
-                            recent movies
-                        </NavLink>
+                        <Link exact to="/">
+                            <h1>Robot Ebert</h1>
+                        </Link>
                     </div>
                 </div>
                 <div className='FlexItem'>

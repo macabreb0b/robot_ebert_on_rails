@@ -54,17 +54,13 @@ export class MovieIndex extends React.Component {
         
         return (
             <div className="wrapper">
-                <div className='filter-movies'>
-                    <h2>Filter movie list</h2>
-                    <input 
+                <h2>Recent Movies</h2>
+                <input 
                         type='text' 
                         placeholder='Type here to filter movie list'
                         onChange={this.onSearchInputChange} 
                         value={this.state.query} 
                         className='filter-movies_input'/>
-                </div>
-                <h2>Recent Movies</h2>
-                
 
                 <ul className="">
                     {movieListItems}

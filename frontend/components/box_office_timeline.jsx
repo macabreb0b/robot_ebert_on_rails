@@ -136,6 +136,9 @@ class BoxOfficeTimeline extends React.Component {
 
         return (
             <section>
+                <section className='wrapper'>
+                    
+                </section>
                 <section>
                     <h3 style={{textAlign: 'center'}}>
                         Daily box office gross (for top 12 movies by gross per day)

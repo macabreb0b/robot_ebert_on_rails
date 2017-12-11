@@ -65,44 +65,37 @@ class MovieShow extends React.Component {
         }
 
         return (
-            <section>
-                <section className='wrapper'>
-                    <h2>
-                        {this.props.movie.title || "\u00a0"}
-                    </h2>
-
-                    <a 
-                        href={_renderIMDBUrl(this.props.movie.imdb_id)}
-                        target="_blank">
-                        <i className="fa fa-external-link" aria-hidden="true"></i> view on imdb 
-                    </a>
-
-                    <div className=''>
-                        <div>
-                            <span className='label'>Year:</span>
-                            {' '}
-                            <strong>{this.props.movie.year}</strong>
-                        </div>
-                        <div>
-                            <span className='label'>Release date:</span>
-                            {' '}
-                            <strong>{this.props.movie.release_date}</strong>
-                        </div>
-                        <div>
-                            <span className='label'>Rating:</span>
-                            {' '}
-                            <strong>{this.props.movie.mpaa_rating}</strong>
-                        </div>
+            <div className='wrapper'>
+                <Link to='/'>Back to Search / Index</Link>
+                <h2>
+                    {this.props.movie.title || "\u00a0"}
+                </h2>
+                <a 
+                    href={_renderIMDBUrl(this.props.movie.imdb_id)}
+                    target="_blank">
+                    <i className="fa fa-external-link" aria-hidden="true"></i> view on imdb 
+                </a>
+                <div className=''>
+                    <div>
+                        <span className='label'>Year:</span>
+                        {' '}
+                        <strong>{this.props.movie.year}</strong>
                     </div>
-                </section>
+                    <div>
+                        <span className='label'>Release date:</span>
+                        {' '}
+                        <strong>{this.props.movie.release_date}</strong>
+                    </div>
+                    <div>
+                        <span className='label'>Rating:</span>
+                        {' '}
+                        <strong>{this.props.movie.mpaa_rating}</strong>
+                    </div>
 
-                <section>
                     <BoxOfficeChartContainer 
                         movie={this.props.movie} 
                         boxOfficeDays={sortedBoxOfficeDays} />
-                </section>
 
-                <section className='wrapper'>
                     <table className='table box-office-days'>
                         <thead>
                             <tr className='row header'>
@@ -136,8 +129,8 @@ class MovieShow extends React.Component {
                             {boxOfficeDayRows}
                         </tbody>
                     </table>
-                </section>
-            </section>
+                </div>
+            </div>
         );
     }
 }
