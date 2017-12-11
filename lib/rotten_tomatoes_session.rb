@@ -61,13 +61,20 @@ class RottenTomatoesSession
             tomato_meter_string = movie_details_html.css(
                 '#all-critics-numbers .critic-score .meter-value'
             ).text
-            audience_score_string = movie_details_html.css(
-                '.audience-score .meter-value'
-            ).text
+
+            if movie_details_html.css('.audience-score .wts') 
+                # page shows "wants to see" % instead of audience score
+                audience_score = nil
+            else
+                audience_score_string = movie_details_html.css(
+                    '.audience-score .meter-value'
+                ).text
+                audience_score = parse_percent_string(audience_score_string)
+            end
 
             return RottenTomatoesData.new(
                 tomato_meter: parse_percent_string(tomato_meter_string),
-                audience_score: parse_percent_string(audience_score_string)
+                audience_score: audience_score
             )
         end
 
