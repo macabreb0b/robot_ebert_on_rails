@@ -7,8 +7,18 @@ import BoxOfficeTimeline from './box_office_timeline';
 const mapStateToProps = (state, {  }) => {
     const movies = state.movies
     const boxOfficeDays = state.boxOfficeDays
+    
+    const moviesForCurrentScope = [];
+    
+    const movieIdsForCurrentScope = new Set(Object.values(boxOfficeDays).map(boxOfficeDay => (
+        boxOfficeDay.movie_id
+    )))
+    movieIdsForCurrentScope.forEach(movieId => {
+        moviesForCurrentScope[movieId] = movies[movieId]
+    })
+
     return {
-        movies,
+        moviesForCurrentScope,
         boxOfficeDays,
         didFetchTimeline: state.ui.didFetchTimeline
     };

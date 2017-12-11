@@ -15,6 +15,7 @@ import {
 import { _renderDollarsWithCommas } from '../util/helpers';
 import LoadingSpinner from './loading_spinner';
 import TiltedXAxisLabel from './tilted_axis_label';
+import merge from 'lodash/merge';
 
 // https://color.hailpixel.com/#DA98DD,5C38A8,75D1C6,CBD279,BD62CB,BF4A40,349D4D,BB3E6A,491F18,5D2060,7262CB,D07C71,7E562A
 const LINE_COLORS = Object.values({
@@ -68,8 +69,27 @@ class BoxOfficeTimeline extends React.Component {
         super(props)
 
         this.state = {}
+        this.state.movieToggles = {}; // map movie id to true/false
+        this.state.chartData = [];
     }
 
+    componentWillReceiveProps({ moviesForCurrentScope, boxOfficeDays }) {
+        const movieToggles = {};
+        const movieIds = Object.keys(moviesForCurrentScope)
+        movieIds.forEach(id => {
+            movieToggles[id] = false;
+        })
+        // pick a random movie to feature in the chart
+        const randomMovieId = movieIds[Math.floor(Math.random() * movieIds.length)];
+        movieToggles[randomMovieId] = true;
+
+        this.setState({
+            movieToggles,
+            chartData: _makeChartData(
+                boxOfficeDays, 
+            )
+        })
+    }
 
     componentDidMount() {
         if (!this.props.didFetchTimeline) {
@@ -77,38 +97,56 @@ class BoxOfficeTimeline extends React.Component {
         }
     }
 
+    toggleMovie(id) {
+        const newMovieToggles = merge({}, this.state.movieToggles, {
+            [id]: !this.state.movieToggles[id]
+        })
+        this.setState({
+            movieToggles: newMovieToggles
+        })
+    }
+
     render() {
         let areaChart = (
             <LoadingSpinner />
         );
 
-        const chartData = _makeChartData(this.props.boxOfficeDays)
-        const movieIdsForCurrentScope = new Set(Object.values(this.props.boxOfficeDays).map(boxOfficeDay => (
-            boxOfficeDay.movie_id
-        )))
         const chartLines = [];
-        movieIdsForCurrentScope.forEach((id, index) => {
-            const movie = this.props.movies[id]
-            const lineColor = LINE_COLORS[index % LINE_COLORS.length]
+        const movieToggleButtons = [];
+        this.props.moviesForCurrentScope.forEach((movie, idx) => {
+            const lineColor = LINE_COLORS[idx % LINE_COLORS.length]
             
-            chartLines.push(
-                <Area 
-                    type='monotone' 
-                    key={movie.id}
-                    dataKey={movie.id} 
-                    name={movie.title}
-                    stroke={lineColor}
-                    fill={lineColor}
-                    strokewidth={2}
-                    fillOpacity={0.1} />
+            if (this.state.movieToggles[movie.id]) {
+                chartLines.push(
+                    <Area 
+                        type='monotone' 
+                        key={movie.id}
+                        dataKey={movie.id} 
+                        name={movie.title}
+                        stroke={lineColor}
+                        fill={lineColor}
+                        strokewidth={2}
+                        fillOpacity={0.1} />
+                )
+            }
+
+            movieToggleButtons.push(
+                <a 
+                    className={'toggle-movie ' + (this.state.movieToggles[movie.id] ? 'active' : 'inactive')} 
+                    style={{backgroundColor: lineColor}}
+                    onClick={() => (this.toggleMovie(movie.id))}
+                >
+                    {movie.title}
+                </a>
             )
+
         })
 
-        if (chartData.length) {
+        if (this.state.chartData.length) {
             areaChart = (
                 <ResponsiveContainer>
                     <AreaChart 
-                        data={chartData}
+                        data={this.state.chartData}
                         margin={{top: 20, right: 30, bottom: 0, left: 30}}>
 
                         <XAxis 
@@ -136,9 +174,6 @@ class BoxOfficeTimeline extends React.Component {
 
         return (
             <section>
-                <section className='wrapper'>
-                    
-                </section>
                 <section>
                     <h3 style={{textAlign: 'center'}}>
                         Daily box office gross (for top 12 movies by gross per day)
@@ -149,6 +184,9 @@ class BoxOfficeTimeline extends React.Component {
 
                         {areaChart}
                     </div>
+                </section>
+                <section className='wrapper'>
+                    {movieToggleButtons}
                 </section>
             </section>
         )

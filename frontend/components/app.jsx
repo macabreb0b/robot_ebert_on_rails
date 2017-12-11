@@ -27,6 +27,17 @@ const App = () => (
                 <div className='FlexItem'>
                     <div className='flex_content'>
                         <NavLink 
+                            exact
+                            activeClassName='active' 
+                            className='top-nav_item' 
+                            to="/">
+                            recent movies
+                        </NavLink>
+                    </div>
+                </div>
+                <div className='FlexItem'>
+                    <div className='flex_content'>
+                        <NavLink 
                             activeClassName='active' 
                             className='top-nav_item' 
                             to="/timeline">

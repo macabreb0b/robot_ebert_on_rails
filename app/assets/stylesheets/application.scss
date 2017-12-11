@@ -141,3 +141,17 @@ body {
 .filter-movies_input {
     width: 200px;
 }
+
+.toggle-movie {
+    color: $text-color;
+    display: inline-block;
+    padding: 3px 6px;
+    border: thin solid $text-color;
+    border-radius: 6px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+.toggle-movie.inactive {
+    opacity: 0.3;
+}
