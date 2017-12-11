@@ -19,7 +19,7 @@ const App = () => (
             <header className='u-flex u-flexAlignItemsCenter'>
                 <div className='FlexItem'>
                     <div className='flex_content'>
-                        <Link exact to="/">
+                        <Link to="/">
                             <h1>Robot Ebert</h1>
                         </Link>
                     </div>
