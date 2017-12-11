@@ -68,6 +68,34 @@ const _getRandomId = movieIds => (
     movieIds[Math.floor(Math.random() * movieIds.length)]
 )
 
+
+class MovieToggleButton extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
+        this.state.isActive = this.props.isActive
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            isActive: nextProps.isActive
+        })
+    }
+
+    render() {
+        return (
+            <a 
+                className={'toggle-movie ' + (this.state.isActive ? 'active' : 'inactive')} 
+                style={{
+                    backgroundColor: this.props.color
+                }}
+                onClick={this.props.toggleMovie}
+            >
+                {this.props.movieTitle}
+            </a>
+        )
+    }
+}
 class BoxOfficeTimeline extends React.Component {
     constructor(props) {
         super(props)
@@ -135,18 +163,17 @@ class BoxOfficeTimeline extends React.Component {
                         stroke={lineColor}
                         fill={lineColor}
                         strokewidth={2}
-                        fillOpacity={0.1} />
+                        fillOpacity={0.1} 
+                        animationDuration={0}/>
                 )
             }
 
             movieToggleButtons.push(
-                <a 
-                    className={'toggle-movie ' + (this.state.movieToggles[movie.id] ? 'active' : 'inactive')} 
-                    style={{backgroundColor: lineColor}}
-                    onClick={() => (this.toggleMovie(movie.id))}
-                >
-                    {movie.title}
-                </a>
+                <MovieToggleButton 
+                    toggleMovie={() => (this.toggleMovie(movie.id))} 
+                    isActive={this.state.movieToggles[movie.id]}
+                    color={lineColor} 
+                    movieTitle={movie.title} />
             )
 
         })
@@ -189,12 +216,18 @@ class BoxOfficeTimeline extends React.Component {
                     </h3>
                     <div 
                         className='chart-container' 
-                        style={{width: '100%', height: 500, position: 'relative'}}>
+                        style={{
+                            width: '100%', 
+                            height: 500, 
+                            position: 'relative'
+                        }}>
 
                         {areaChart}
                     </div>
                 </section>
                 <section className='wrapper'>
+                    Click to compare:
+                    <br />
                     {movieToggleButtons}
                 </section>
             </section>

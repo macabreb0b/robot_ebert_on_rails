@@ -1,7 +1,7 @@
 class Api::BoxOfficeDaysController < ApplicationController
     def timeline
         box_office_days = BoxOfficeDay.where(  # get the last 10 days by default
-            day: (Date.today - 20)..(Date.today), 
+            day: (Date.today - 30)..(Date.today), 
         ).where(
             bomojo_rank: 1..12,
         )
