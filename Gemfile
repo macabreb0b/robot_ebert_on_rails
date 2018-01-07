@@ -49,7 +49,8 @@ group :development, :test do
     gem 'binding_of_caller'
     gem 'pry-rails'
     gem 'annotate'
-    gem "pre-commit"
+    gem "pre-commit", require: false
+    gem 'rubocop', require: false
 end
 
 group :development do
