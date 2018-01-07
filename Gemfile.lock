@@ -108,6 +108,9 @@ GEM
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     pg (0.21.0)
+    pluginator (1.5.0)
+    pre-commit (0.37.0)
+      pluginator (~> 1.5)
     pry (0.11.1)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -207,6 +210,7 @@ DEPENDENCIES
   kwstruct
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
+  pre-commit
   pry-rails
   puma (~> 3.7)
   rails (~> 5.1.4)

@@ -49,6 +49,7 @@ group :development, :test do
     gem 'binding_of_caller'
     gem 'pry-rails'
     gem 'annotate'
+    gem "pre-commit"
 end
 
 group :development do
