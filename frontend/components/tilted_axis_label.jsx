@@ -11,7 +11,7 @@ const TiltedXAxisLabel = ({x, y, payload}) => (
         fill={'#666'}
         transform={`rotate(-45 ${x} ${y})`}>
 
-        <tspan>{payload.value}</tspan>
+        <tspan>{new Date(payload.value).toLocaleDateString('en-US')}</tspan>
     </text>
 )
 
