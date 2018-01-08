@@ -83,7 +83,7 @@ $header-row-background-color: #ea6153;
 
 .row {
     display: table-row;
-    background: $row-background-color;
+    background: $even-row-background-color;
 
     @media screen and (max-width: 580px) {
         padding: 8px 0;
@@ -93,7 +93,7 @@ $header-row-background-color: #ea6153;
     &.header {
         font-weight: 900;
         color: $white;
-        background: $header-row-background-color;
+        background: $header-row-background-color !important;
     }
 
     &:nth-of-type(odd) {
