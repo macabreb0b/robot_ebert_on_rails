@@ -48,16 +48,16 @@ class MovieShow extends React.Component {
                             {boxOfficeDay.tomato_meter}
                         </td>
                         <td className='cell u-text--right'>
-                            {boxOfficeDay.bomojo_rank} 
+                            {boxOfficeDay.bomojo_rank}
                         </td>
                         <td className='cell u-text--right'>
-                            {_renderDollarsWithCommas(boxOfficeDay.bomojo_daily_gross)} 
+                            {_renderDollarsWithCommas(boxOfficeDay.bomojo_daily_gross)}
                         </td>
                         <td className='cell u-text--right'>
                             {boxOfficeDay.bomojo_theater_count}
                         </td>
                         <td className='cell u-text--right'>
-                            {_renderDollarsWithCommas(boxOfficeDay.bomojo_to_date_gross)} 
+                            {_renderDollarsWithCommas(boxOfficeDay.bomojo_to_date_gross)}
                         </td>
                     </tr>
                 )
@@ -70,10 +70,10 @@ class MovieShow extends React.Component {
                 <h2>
                     {this.props.movie.title || "\u00a0"}
                 </h2>
-                <a 
+                <a
                     href={_renderIMDBUrl(this.props.movie.imdb_id)}
                     target="_blank">
-                    <i className="fa fa-external-link" aria-hidden="true"></i> view on imdb 
+                    <i className="fa fa-external-link" aria-hidden="true"></i> view on imdb
                 </a>
                 <div className=''>
                     <div>
@@ -92,8 +92,8 @@ class MovieShow extends React.Component {
                         <strong>{this.props.movie.mpaa_rating}</strong>
                     </div>
 
-                    <BoxOfficeChartContainer 
-                        movie={this.props.movie} 
+                    <BoxOfficeChartContainer
+                        movie={this.props.movie}
                         boxOfficeDays={sortedBoxOfficeDays} />
 
                     <table className='table box-office-days'>
@@ -125,7 +125,7 @@ class MovieShow extends React.Component {
                                 </td>
                             </tr>
                         </thead>
-                        <tbody> 
+                        <tbody>
                             {boxOfficeDayRows}
                         </tbody>
                     </table>

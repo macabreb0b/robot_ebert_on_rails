@@ -111,6 +111,7 @@ class BoxOfficeChart extends React.Component {
                             fill='#F06449'
                             stroke='#F06449'
                             strokewidth={2}
+                            connectNulls={true}
                             fillOpacity={0.5} />
 
                         <Area
@@ -119,6 +120,7 @@ class BoxOfficeChart extends React.Component {
                             name='Box Office Earnings - Single Day'
                             stroke='#5BC3EB'
                             strokewidth={2}
+                            connectNulls={true}
                             fillOpacity={0} />
 
                     </AreaChart>

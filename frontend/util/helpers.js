@@ -13,9 +13,9 @@ export function _renderBoxOfficeDay(day, movieReleaseDay) {
 
     // if it's the release day, add a star emoji
     if (dayAsDate.getTime() == movieReleaseDayAsDate.getTime()) {
-        return day + ' ⭐️ ' 
+        return day + ' ⭐️ ';
     }
-    return day
+    return day;
 }
 
 

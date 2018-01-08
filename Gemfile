@@ -51,6 +51,7 @@ group :development, :test do
     gem 'annotate'
     gem "pre-commit", require: false
     gem 'rubocop', require: false
+    gem 'scss-lint', '>= 0.17'
 end
 
 group :development do
