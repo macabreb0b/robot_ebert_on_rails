@@ -35,8 +35,8 @@ function _makeBoxOfficeDaysByDateMap(boxOfficeDays) {
 function _makeBlankBoxOfficeDay(date) {
     return {
         day: date.toLocaleDateString('en-US'),
-        bomojo_to_date_gross: NO_DATA_FOR_DAY,
-        bomojo_daily_gross: NO_DATA_FOR_DAY
+        bomojo_to_date_gross: null,
+        bomojo_daily_gross: null
     }
 }
 
@@ -72,11 +72,7 @@ function _fillInMissingDays(sortedBoxOfficeDays) {
 }
 
 function _formatChartDollarValue(value) {
-    if (value == NO_DATA_FOR_DAY) {
-        return value;
-    } else {
-        return _renderDollarsWithCommas(value);
-    }
+    return _renderDollarsWithCommas(value);
 }
 class BoxOfficeChart extends React.Component {
     render() {
