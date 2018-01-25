@@ -1,7 +1,7 @@
 
 def render_fetching(bomojo_data, bomojo_rankings)
     puts "Fetching: #{_fill_spaces(
-        bomojo_data.title, 
+        bomojo_data.title,
         _longest_title_length(bomojo_rankings)
     )} - daily gross: $#{bomojo_data.daily_gross}"
 end
@@ -25,7 +25,7 @@ namespace :box_office do
         box_office_mojo_rankings = BoxOfficeMojoSession.get_movie_data_for_date(
             args[:date]
         )
-        
+
         day = Date.parse(args[:date])
 
         box_office_mojo_rankings.each do |bomojo_data|
@@ -33,8 +33,8 @@ namespace :box_office do
 
             movie = Movie.find_by_bomojo_id(bomojo_data.bomojo_id)
 
-            if movie && movie.box_office_days.any? { |box_office_day| 
-                box_office_day.day == day 
+            if movie && movie.box_office_days.any? { |box_office_day|
+                box_office_day.day == day
             }
                 # we already have data for requested day
                 next
@@ -90,12 +90,28 @@ namespace :box_office do
                 bomojo_to_date_gross: bomojo_data.to_date_gross,
                 bomojo_theater_count: bomojo_data.theater_count
             )
+
+            # update best box office rank if needed
+            # TODO - convert to helper method on Movie model
+            if bomojo_data.rank
+                if movie.best_box_office_rank.nil?
+                    movie.best_box_office_rank = bomojo_data.rank
+                    movie.days_at_best_box_office_rank = 1
+
+                elsif bomojo_data.rank < movie.best_box_office_rank
+                    movie.best_box_office_rank = bomojo_data.rank
+
+                elsif bomojo_data.rank == movie.best_box_office_rank
+                    movie.days_at_best_box_office_rank += 1
+                end
+            end
+
             movie.save!
         end
     end
 
     desc 'Fetch for yesterday'
-    task :fetch_for_yesterday => :environment do 
+    task :fetch_for_yesterday => :environment do
         # do some fudging for time zone and when box office is reported
         yesterday = (DateTime.now - 8.hours - 1.day).to_date
         time_string = yesterday.strftime("%Y-%m-%d")

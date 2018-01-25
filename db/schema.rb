@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206022409) do
+ActiveRecord::Schema.define(version: 20180125045802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20171206022409) do
     t.string "bomojo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "best_box_office_rank"
+    t.integer "days_at_best_box_office_rank"
     t.index ["bomojo_id"], name: "index_movies_on_bomojo_id", unique: true
     t.index ["imdb_id"], name: "index_movies_on_imdb_id", unique: true
   end

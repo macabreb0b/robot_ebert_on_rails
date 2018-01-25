@@ -73,7 +73,7 @@ class MovieShow extends React.Component {
                 <a
                     href={_renderIMDBUrl(this.props.movie.imdb_id)}
                     target="_blank">
-                    <i className="fa fa-external-link" aria-hidden="true"></i> view on imdb
+                    view on imdb <i className="fa fa-external-link" aria-hidden="true"></i>
                 </a>
                 <div className=''>
                     <div>
