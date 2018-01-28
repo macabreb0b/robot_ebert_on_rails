@@ -91,7 +91,7 @@ export class MovieIndex extends React.Component {
         })
 
         return (
-            <div className="wrapper">
+            <div className="">
                 <h2>Recent Movies</h2>
                 <input
                     type='text'
@@ -120,7 +120,9 @@ export class MovieIndex extends React.Component {
                             </th>
                         </tr>
                     </thead>
-                    {movieListItems}
+                    <tbody>
+                        {movieListItems}
+                    </tbody>
                 </table>
             </div>
         );

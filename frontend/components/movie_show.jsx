@@ -66,7 +66,7 @@ class MovieShow extends React.Component {
         }
 
         return (
-            <div className='wrapper'>
+            <div className=''>
                 <Link to='/'>Back to Search / Index</Link>
                 <div className='movie-header'>
                     <div className='u-flex u-flexAlignItemsCenter'>
