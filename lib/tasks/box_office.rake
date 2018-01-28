@@ -94,15 +94,15 @@ namespace :box_office do
             # update best box office rank if needed
             # TODO - convert to helper method on Movie model
             if bomojo_data.rank
-                if movie.best_box_office_rank.nil?
-                    movie.best_box_office_rank = bomojo_data.rank
-                    movie.days_at_best_box_office_rank = 1
+                if movie.box_office_data['best_rank'].nil?
+                    movie.box_office_data['best_rank'] = bomojo_data.rank
+                    movie.box_office_data['days_at_best_rank'] = 1
 
-                elsif bomojo_data.rank < movie.best_box_office_rank
-                    movie.best_box_office_rank = bomojo_data.rank
+                elsif bomojo_data.rank < movie.box_office_data['best_rank']
+                    movie.box_office_data['best_rank'] = bomojo_data.rank
 
                 elsif bomojo_data.rank == movie.best_box_office_rank
-                    movie.days_at_best_box_office_rank += 1
+                    movie.box_office_data['days_at_best_rank'] += 1
                 end
             end
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BoxOfficeChartContainer from './box_office_chart_container';
 import LoadingSpinner from './loading_spinner';
 import { _renderBoxOfficeDay, _renderDollarsWithCommas } from '../util/helpers'
+import { _renderIconBookmarked, _renderIconSeenIt } from '../util/helpers'
 
 function _renderIMDBUrl(id) {
     return `https://www.imdb.com/title/${id}`
@@ -67,9 +68,21 @@ class MovieShow extends React.Component {
         return (
             <div className='wrapper'>
                 <Link to='/'>Back to Search / Index</Link>
-                <h2>
-                    {this.props.movie.title || "\u00a0"}
-                </h2>
+                <div className='movie-header'>
+                    <div className='u-flex u-flexAlignItemsCenter'>
+                        <div className="FlexItem u-flexGrow1">
+                        <h2>
+                            {this.props.movie.title || "\u00a0"}
+                        </h2>
+                        </div>
+                        <div className="FlexItem u-flexGrow1 u-flexInitial" style={{width: 40}}>
+                            {_renderIconSeenIt(false)}
+                        </div>
+                        <div className="FlexItem u-flexGrow1 u-flexInitial" style={{width: 40}}>
+                            {_renderIconBookmarked(false)}
+                        </div>
+                    </div>
+                </div>
                 <a
                     href={_renderIMDBUrl(this.props.movie.imdb_id)}
                     target="_blank">

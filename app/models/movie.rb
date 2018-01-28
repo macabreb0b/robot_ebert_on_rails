@@ -5,4 +5,12 @@ class Movie < ApplicationRecord
         foreign_key: :movie_id,
         class_name: 'BoxOfficeDay'
     )
+
+    def user_has_seen
+
+    end
+
+    def user_has_bookmarked
+
+    end
 end

@@ -18,11 +18,11 @@
 @import 'font-awesome';
 
 .u-text--right {
-    text-align: right !important;
+  text-align: right !important;
 }
 
 .u-nowrap {
-    white-space: nowrap !important;
+  white-space: nowrap !important;
 }
 
 $text-color: #ede6e3;
@@ -33,48 +33,48 @@ $table-text-color: #3b3b3b;
 
 // START RESET
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 // END RESET
 
 a {
-    color: $text-color;
+  color: $text-color;
 }
 
 a:visited {
-    color: $text-color-visited;
+  color: $text-color-visited;
 }
 
 body {
-    background: $background-color;
-    color: $text-color;
-    font-family: 'Lucida Sans', Arial, sans-serif;
-    font-size: 14px;
-    -webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    font-weight: 400;
-    line-height: 20px;
+  background: $background-color;
+  color: $text-color;
+  font-family: 'Lucida Sans', Arial, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 
 .wrapper {
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 0 40px;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 40px;
 }
 
 
 .table {
-    margin: 0 0 40px 0;
-    width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-    display: table;
-    color: $table-text-color;
+  margin: 0 0 40px 0;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  display: table;
+  color: $table-text-color;
 
-    @media screen and (max-width: 580px) {
-        display: block;
-    }
+  @media screen and (max-width: 580px) {
+    display: block;
+  }
 }
 
 $even-row-background-color: #f6f6f6;
@@ -82,83 +82,179 @@ $odd-row-background-color: #e9e9e9;
 $header-row-background-color: #ea6153;
 
 .row {
-    display: table-row;
-    background: $even-row-background-color;
+  display: table-row;
+  background: $even-row-background-color;
 
-    @media screen and (max-width: 580px) {
-        padding: 8px 0;
-        display: block;
-    }
+  @media screen and (max-width: 580px) {
+    padding: 8px 0;
+    display: block;
+  }
 
-    &.header {
-        font-weight: 900;
-        color: $white;
-        background: $header-row-background-color !important;
-    }
+  &.header {
+    font-weight: 900;
+    color: $white;
+    background: $header-row-background-color !important;
+  }
 
-    &:nth-of-type(odd) {
-        background: $odd-row-background-color;
-    }
+  &:nth-of-type(odd) {
+    background: $odd-row-background-color;
+  }
 }
 
 .cell {
-    display: table-cell;
-    padding: 6px 12px;
+  display: table-cell;
+  padding: 6px 12px;
 
-    @media screen and (max-width: 580px) {
-        padding: 2px 12px;
-        display: block;
-    }
+  @media screen and (max-width: 580px) {
+    padding: 2px 12px;
+    display: block;
+  }
 }
 
 .spinner-container {
-    -webkit-align-items: center;
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    -webkit-justify-content: center;
-    justify-content: center;
-    left: 0;
-    min-height: 100px;
-    position: absolute;
-    right: 0;
-    top: 0;
+  -webkit-align-items: center;
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  left: 0;
+  min-height: 100px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .flex_content {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .top-nav_item {
-    display: inline-block;
-    padding: 3px 6px;
-    border: thin solid $text-color;
-    border-radius: 6px;
-    text-decoration: none;
+  display: inline-block;
+  padding: 3px 6px;
+  border: thin solid $text-color;
+  border-radius: 6px;
+  text-decoration: none;
 }
 
 .top-nav_item:hover,
 .top-nav_item.active,
 .top-nav_item.active:hover {
-    color: $background-color;
-    background-color: $text-color;
+  color: $background-color;
+  background-color: $text-color;
 }
 
 .filter-movies_input {
-    width: 200px;
+  width: 200px;
 }
 
 .toggle-movie {
-    border: thin solid $text-color;
-    border-radius: 6px;
-    color: $text-color;
-    cursor: pointer;
-    display: inline-block;
-    margin-right: 6px;
-    margin-bottom: 6px;
-    padding: 3px 6px;
+  border: thin solid $text-color;
+  border-radius: 6px;
+  color: $text-color;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  padding: 3px 6px;
 
-    &.inactive {
-        opacity: .3;
-    }
+  &.inactive {
+    opacity: .3;
+  }
+}
+
+.show-tooltip {
+  position:relative;
+  display: inline-block;
+
+  .tooltip {
+    white-space: nowrap;
+    position:absolute;
+    display: inline-block;
+    left: 90%;
+    top: 50%;
+    margin-top: -1em;
+    padding: 2px 4px;
+    background: white;
+    color: black;
+    z-index: 1;
+    opacity: 0;
+    border-radius: 10px;
+
+    transition: .4s linear;
+    -webkit-transition: .4s linear;
+  }
+}
+
+.show-tooltip:hover {
+  .tooltip {
+    opacity: 1;
+    left: 100%;
+  }
+}
+
+.rank {
+  padding: 2px 3px;
+  border-radius: 10px;
+  border: thin solid white;
+  margin: 0 5px;
+}
+
+.rank--1 {
+  background-color: gold;
+  color: $background-color;
+}
+.rank--2 {
+  background-color: red;
+}
+.rank--3 {
+  background-color: blue;
+}
+.rank--4 {
+  background-color: purple;
+}
+.rank--5 {
+  background-color: purple;
+}
+.rank--6 {
+  background-color: purple;
+}
+.rank--7 {
+  background-color: LightSeaGreen;
+}
+.rank--8 {
+  background-color: LightSeaGreen;
+}
+.rank--9 {
+  background-color: LightSeaGreen;
+}
+.rank--10 {
+  background-color: SaddleBrown;
+}
+.rank--11 {
+  background-color: SaddleBrown;
+}
+.rank--12 {
+  background-color: SaddleBrown;
+}
+
+.movies-list {
+  th, td {
+    padding-right: 0.25rem;
+  }
+
+  th {
+    text-align: left;
+    white-space: nowrap;
+  }
+
+}
+
+.chunky-icon {
+  font-size: 2em;
+  text-align: center;
+}
+
+.seen-it-no {
+  opacity: .6;
 }
