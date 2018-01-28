@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  namespace :api, defaults: {format: :json} do 
+  namespace :api, defaults: {format: :json} do
     resources :movies, only: [:index, :show]
-    
+
+    post 'users', to: 'users#create'
+    post 'session', to: 'session#create'
+    delete 'session', to: 'session#destroy'
+
     get 'timeline', to: 'box_office_days#timeline'
   end
 
