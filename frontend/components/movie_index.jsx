@@ -18,11 +18,11 @@ function _fuzzyMatchList(query, movieList) {
 function _renderBestBoxOfficeRanks(movie) {
     let ranks = [];
     if (movie.box_office_data.best_rank) {
-        ranks = new Array(movie.box_office_data.days_at_best_rank)
+        ranks = new Array(1)
             .fill(movie.box_office_data.best_rank);
     }
     const renderedRanks = ranks.map((rank, idx) => (
-        <span key={idx} className={`rank rank--${rank}`}>{rank}</span>
+        <span key={idx} className={`rank rank--${rank}`}>{'#' + rank}</span>
     ))
     if (ranks.length) {
         return (
@@ -68,25 +68,36 @@ export class MovieIndex extends React.Component {
         const matchedMovies = _fuzzyMatchList(this.state.query, this.props.movies);
         const movieListItems = matchedMovies.map((movie) => {
             return (
-                <tr key={movie.bomojo_id}>
-                    <td>
-                        <Link to={`/movies/${movie.id}`}>
-                            {movie.title}
-                        </Link>
-                    </td>
-                    <td>
-                        {movie.release_date}
-                    </td>
-                    <td>
-                        {_renderIconSeenIt(false)}
-                    </td>
-                    <td>
-                        {_renderIconBookmarked(false)}
-                    </td>
-                    <td>
-                        {_renderBestBoxOfficeRanks(movie)}
-                    </td>
-                </tr>
+                <div className='movie-list-card u-flex u-flexRow u-flexAlignItemsCenter' key={movie.bomojo_id}>
+                    <div className='FlexItem u-flexExpandRight'>
+                        <div className='movie-list-card_title'>
+                            <Link to={`/movies/${movie.id}`}>
+                                {movie.title}
+                            </Link>
+                        </div>
+                    </div>
+                    <div className='FlexItem'>
+                        <div className='u-flex u-flexCol u-flexAlignItemsCenter'>
+
+                            <div className='FlexItem'>
+                                <div className='u-flex u-flexRow u-flexJustifyAround'>
+                                    <div className='FlexItem'>
+                                        {_renderIconSeenIt(false)}
+                                    </div>
+                                    <div className='FlexItem'>
+                                        {_renderIconBookmarked(false)}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='FlexItem u-flexExpand'>
+                                <div className='rank-container'>
+                                    {_renderBestBoxOfficeRanks(movie)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )
         })
 
@@ -100,28 +111,9 @@ export class MovieIndex extends React.Component {
                     value={this.state.query}
                     className='filter-movies_input'/>
 
-                <table className="movies-list">
-                    <thead>
-                        <tr>
-                            <th>
-                                Title
-                            </th>
-                            <th>
-                                Release Date
-                            </th>
-                            <th>
-                                {_renderIconSeenIt(true)}
-                            </th>
-                            <th>
-                                {_renderIconBookmarked(true)}
-                            </th>
-                            <th>
-                                Best box office rating
-                            </th>
-                        </tr>
-                    </thead>
+                <div className='movie-list'>
                     {movieListItems}
-                </table>
+                </div>
             </div>
         );
     }

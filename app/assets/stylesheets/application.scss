@@ -25,7 +25,7 @@
   white-space: nowrap !important;
 }
 
-$text-color: #ede6e3;
+$text-color: #edecea;
 $text-color-visited: #dadad9;
 $background-color: #2b2b2b;
 $white: #fff;
@@ -164,94 +164,138 @@ $header-row-background-color: #ea6153;
 }
 
 .show-tooltip {
-  position:relative;
   display: inline-block;
+  position: relative;
 
   .tooltip {
-    white-space: nowrap;
-    position:absolute;
+    background: white;
+    border-radius: 10px;
+    color: black;
     display: inline-block;
     left: 90%;
-    top: 50%;
     margin-top: -1em;
-    padding: 2px 4px;
-    background: white;
-    color: black;
-    z-index: 1;
     opacity: 0;
-    border-radius: 10px;
-
-    transition: .4s linear;
+    padding: 2px 4px;
+    position:absolute;
+    top: 50%;
     -webkit-transition: .4s linear;
+    transition: .4s linear;
+    white-space: nowrap;
+    z-index: 1;
+
   }
 }
 
 .show-tooltip:hover {
   .tooltip {
-    opacity: 1;
     left: 100%;
+    opacity: 1;
   }
 }
 
+.movie-list-card_sidebar {
+  width: 100px;
+}
+
 .rank {
-  padding: 2px 3px;
-  border-radius: 10px;
-  border: thin solid white;
+  background-color: $background-color;
+  border-radius: 92px;
+  color: $text-color;
+  display: block;
+  font-size: 3em;
+  font-weight: bold;
+  height: 80px;
+  line-height: 80px;
   margin: 0 5px;
+  text-align: center;
+  transform: rotatez(20deg);
+  width: 80px;
+}
+
+.rank-container {
+  height: 100px;
+  text-align: center;
+  width: 100px;
 }
 
 .rank--1 {
   background-color: gold;
   color: $background-color;
 }
+
 .rank--2 {
   background-color: red;
 }
+
 .rank--3 {
   background-color: blue;
 }
+
 .rank--4 {
   background-color: purple;
 }
+
 .rank--5 {
   background-color: purple;
 }
+
 .rank--6 {
   background-color: purple;
 }
+
 .rank--7 {
   background-color: LightSeaGreen;
 }
+
 .rank--8 {
   background-color: LightSeaGreen;
 }
+
 .rank--9 {
   background-color: LightSeaGreen;
 }
+
 .rank--10 {
   background-color: SaddleBrown;
+  font-size: 2.2em;
 }
+
 .rank--11 {
   background-color: SaddleBrown;
+  font-size: 2.2em;
 }
+
 .rank--12 {
   background-color: SaddleBrown;
+  font-size: 2.2em;
 }
 
-.movies-list {
-  th, td {
-    padding-right: 0.25rem;
-  }
-
-  th {
-    text-align: left;
-    white-space: nowrap;
-  }
-
+.movie-list-card {
+  background-color: $text-color;
+  color: $background-color;
+  height: 200px;
+  margin: 12px 0;
 }
+
+.movie-list-card_title {
+  font-size: 3em;
+  font-weight: bold;
+  line-height: 1em;
+  padding: 18px;
+
+  a {
+    color: $background-color;
+    text-decoration: none;
+
+    &:visited {
+      color: $background-color;
+    }
+  }
+}
+
 
 .chunky-icon {
-  font-size: 2em;
+  font-size: 3em;
   text-align: center;
 }
 
