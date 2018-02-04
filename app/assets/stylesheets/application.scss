@@ -17,6 +17,22 @@
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 
+
+$text-color: #edecea;
+$text-color-visited: #dadad9;
+$background-color: #2b2b2b;
+$white: #fff;
+$table-text-color: #3b3b3b;
+$header-height: 57.5px;
+$red: red;
+$blue: blue;
+$purple: purple;
+$light-sea-green: LightSeaGreen;
+$saddle-brown: SaddleBrown;
+$black: black;
+$gold: gold;
+$frontmost: 1000;
+
 .u-text--right {
   text-align: right !important;
 }
@@ -25,16 +41,43 @@
   white-space: nowrap !important;
 }
 
-$text-color: #edecea;
-$text-color-visited: #dadad9;
-$background-color: #2b2b2b;
-$white: #fff;
-$table-text-color: #3b3b3b;
+.u-pseudolink {
+  cursor: pointer;
+}
+
+.header--fixed {
+  background-color: $background-color;
+  height: $header-height;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $frontmost;
+}
+
+.main--with-fixed-header {
+  margin-top: $header-height;
+}
 
 // START RESET
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+html {
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-x:hidden; // TODO - resolve extra-padding showing up on responsive view, and remove this
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: inherit;
+  -ms-box-sizing: inherit;
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
 }
 // END RESET
 
@@ -55,22 +98,23 @@ body {
   font-smoothing: antialiased;
   font-weight: 400;
   line-height: 20px;
+  overflow-x:hidden; // TODO - resolve extra-padding showing up on responsive view, and remove this
 }
 
-
-.wrapper {
-  margin: 0 auto;
-  max-width: 800px;
-  padding: 0 40px;
+@media screen and (min-width: 40.5em) {
+  .wrapper {
+    margin: 0 auto;
+    max-width: 800px;
+  }
 }
 
 
 .table {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  color: $table-text-color;
+  display: table;
   margin: 0 0 40px 0;
   width: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-  display: table;
-  color: $table-text-color;
 
   @media screen and (max-width: 580px) {
     display: block;
@@ -82,18 +126,18 @@ $odd-row-background-color: #e9e9e9;
 $header-row-background-color: #ea6153;
 
 .row {
-  display: table-row;
   background: $even-row-background-color;
+  display: table-row;
 
   @media screen and (max-width: 580px) {
-    padding: 8px 0;
     display: block;
+    padding: 8px 0;
   }
 
   &.header {
-    font-weight: 900;
-    color: $white;
     background: $header-row-background-color !important;
+    color: $white;
+    font-weight: 900;
   }
 
   &:nth-of-type(odd) {
@@ -106,8 +150,8 @@ $header-row-background-color: #ea6153;
   padding: 6px 12px;
 
   @media screen and (max-width: 580px) {
-    padding: 2px 12px;
     display: block;
+    padding: 2px 12px;
   }
 }
 
@@ -131,17 +175,17 @@ $header-row-background-color: #ea6153;
 
 .top-nav_item {
   display: inline-block;
-  padding: 3px 6px;
   border: thin solid $text-color;
   border-radius: 6px;
+  padding: 3px 6px;
   text-decoration: none;
 }
 
 .top-nav_item:hover,
 .top-nav_item.active,
 .top-nav_item.active:hover {
-  color: $background-color;
   background-color: $text-color;
+  color: $background-color;
 }
 
 .filter-movies_input {
@@ -154,8 +198,8 @@ $header-row-background-color: #ea6153;
   color: $text-color;
   cursor: pointer;
   display: inline-block;
-  margin-right: 6px;
   margin-bottom: 6px;
+  margin-right: 6px;
   padding: 3px 6px;
 
   &.inactive {
@@ -170,13 +214,12 @@ $header-row-background-color: #ea6153;
   .tooltip {
     background: white;
     border-radius: 10px;
-    color: black;
+    color: $black;
     display: inline-block;
-    left: 90%;
     margin-top: -1em;
     opacity: 0;
     padding: 2px 4px;
-    position:absolute;
+    position: absolute;
     top: 50%;
     -webkit-transition: .4s linear;
     transition: .4s linear;
@@ -184,12 +227,16 @@ $header-row-background-color: #ea6153;
     z-index: 1;
 
   }
+
+  .tooltip--left {
+    right: 90%;
+  }
 }
 
 .show-tooltip:hover {
   .tooltip {
-    left: 100%;
     opacity: 1;
+    right: 100%;
   }
 }
 
@@ -219,54 +266,54 @@ $header-row-background-color: #ea6153;
 }
 
 .rank--1 {
-  background-color: gold;
+  background-color: $gold;
   color: $background-color;
 }
 
 .rank--2 {
-  background-color: red;
+  background-color: $red;
 }
 
 .rank--3 {
-  background-color: blue;
+  background-color: $blue;
 }
 
 .rank--4 {
-  background-color: purple;
+  background-color: $purple;
 }
 
 .rank--5 {
-  background-color: purple;
+  background-color: $purple;
 }
 
 .rank--6 {
-  background-color: purple;
+  background-color: $purple;
 }
 
 .rank--7 {
-  background-color: LightSeaGreen;
+  background-color: $light-sea-green;
 }
 
 .rank--8 {
-  background-color: LightSeaGreen;
+  background-color: $light-sea-green;
 }
 
 .rank--9 {
-  background-color: LightSeaGreen;
+  background-color: $light-sea-green;
 }
 
 .rank--10 {
-  background-color: SaddleBrown;
+  background-color: $saddle-brown;
   font-size: 2.2em;
 }
 
 .rank--11 {
-  background-color: SaddleBrown;
+  background-color: $saddle-brown;
   font-size: 2.2em;
 }
 
 .rank--12 {
-  background-color: SaddleBrown;
+  background-color: $saddle-brown;
   font-size: 2.2em;
 }
 
@@ -278,10 +325,15 @@ $header-row-background-color: #ea6153;
 }
 
 .movie-list-card_title {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
   font-size: 3em;
   font-weight: bold;
+  -webkit-line-clamp: 3;
   line-height: 1em;
-  padding: 18px;
+  max-height: 3em;
+  overflow: hidden;
+  padding: 0 12px;
 
   a {
     color: $background-color;

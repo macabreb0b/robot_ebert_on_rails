@@ -14,39 +14,42 @@ import MovieIndexContainer from './movie_index_container';
 import BoxOfficeTimelineContainer from './box_office_timeline_container'
 
 const App = () => (
-    <div className="">
-        <div className="wrapper">
-            <header className='u-flex u-flexAlignItemsCenter'>
-                <div className='FlexItem'>
-                    <div className='flex_content'>
-                        <Link to="/">
-                            <h1>Robot Ebert</h1>
-                        </Link>
+    <div className="main main--with-fixed-header">
+        <div className="header--fixed">
+            <div className="wrapper">
+                <header className='u-flex u-flexAlignItemsCenter'>
+                    <div className='FlexItem'>
+                        <div className='flex_content'>
+                            <Link to="/">
+                                <h1>Robot Ebert</h1>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-                <div className='FlexItem'>
-                    <div className='flex_content'>
-                        <NavLink 
-                            exact
-                            activeClassName='active' 
-                            className='top-nav_item' 
-                            to="/">
-                            recent movies
-                        </NavLink>
+                    <div className='FlexItem'>
+                        <div className='flex_content'>
+                            <NavLink
+                                exact
+                                activeClassName='active'
+                                className='top-nav_item'
+                                to="/">
+                                ALL
+                            </NavLink>
+                        </div>
                     </div>
-                </div>
-                <div className='FlexItem'>
-                    <div className='flex_content'>
-                        <NavLink 
-                            activeClassName='active' 
-                            className='top-nav_item' 
-                            to="/timeline">
-                            box office timeline
-                        </NavLink>
+                    <div className='FlexItem'>
+                        <div className='flex_content'>
+                            <NavLink
+                                activeClassName='active'
+                                className='top-nav_item'
+                                to="/timeline">
+                                TIMELINE
+                            </NavLink>
+                        </div>
                     </div>
-                </div>
-            </header>
+                </header>
+            </div>
         </div>
+
         <Switch>
             <Route exact path="/" component={MovieIndexContainer} />
             <Route path="/movies/:movieId" component={MovieShowContainer} />
