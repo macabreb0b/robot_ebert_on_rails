@@ -52,6 +52,15 @@ group :development, :test do
     gem "pre-commit", require: false
     gem 'rubocop', require: false
     gem 'scss-lint', '>= 0.17'
+    gem 'rspec-rails'
+    gem 'factory_girl_rails'
+end
+
+group :test do
+    gem 'faker'
+    gem 'launchy'
+    gem 'shoulda-matchers', '~>3.1'
+
 end
 
 group :development do
