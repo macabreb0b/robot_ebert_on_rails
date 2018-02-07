@@ -13,7 +13,7 @@ const mapStateToProps = (state, {  }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchMovies: id => dispatch(fetchMovies())
+    fetchMovies: () => dispatch(fetchMovies())
 });
 
 export default connect(
