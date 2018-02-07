@@ -23,6 +23,7 @@ def parse_imdb_rating(rating_string)
         return nil
     end
 end
+
 class IMDBSession
     def self.get_movie_data(imdb_id)
         movies_for_day = []

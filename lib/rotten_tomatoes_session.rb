@@ -11,7 +11,7 @@ def parse_title_and_year(bomojo_title)
     match_regex_title_year = /(?<title>.+)\s\((?<year>[12][0-9]{3})\)/.match(bomojo_title)
     if match_regex_title_year
         return [
-            match_regex_title_year.named_captures['title'], 
+            match_regex_title_year.named_captures['title'],
             Integer(match_regex_title_year.named_captures['year'])
         ]
     else
@@ -30,10 +30,23 @@ def rotten_tomatoes_urls_to_try(
     parsed_title, parsed_year = parse_title_and_year(title_string)
 
     snake_case_title = to_snake_case(parsed_title)
-    snake_case_title_plus_year = snake_case_title + "_#{parsed_year || Date.today.year}"
+
+    if parsed_year
+        snake_case_title_plus_parsed_year = snake_case_title + "_#{parsed_year}"
+        return [
+            rotten_tomatoes_url(snake_case_title_plus_parsed_year),
+            rotten_tomatoes_url(snake_case_title)
+        ]
+    end
+
+    snake_case_title_plus_this_year = snake_case_title + "_#{Date.today.year}"
+
+    # handle case where movie came out last year (e.g., today is January 1st)
+    snake_case_title_plus_last_year = snake_case_title + "_#{Date.today.year - 1}"
 
     return [
-        rotten_tomatoes_url(snake_case_title_plus_year),
+        rotten_tomatoes_url(snake_case_title_plus_this_year),
+        rotten_tomatoes_url(snake_case_title_plus_last_year),
         rotten_tomatoes_url(snake_case_title)
     ]
 end
@@ -62,8 +75,24 @@ class RottenTomatoesSession
                 '#all-critics-numbers .critic-score .meter-value'
             ).text
 
-            if movie_details_html.css('.audience-score .wts') 
+            if tomato_meter_string == ''
+                tomato_meter = nil
+
+                if movie_details_html.css('#all-critics-numbers .noReviewText').length == 1
+                    puts 'skipping tomatometer - 0 critic reviews available'
+                else
+                    # if we hit this case, could be an edge case or could be that the HTML on the page changed
+                    puts 'skipping tomatometer - unknown error (check HTML changed)'
+                end
+            else
+                tomato_meter = parse_percent_string(tomato_meter_string)
+            end
+
+
+            if movie_details_html.css('.audience-score .wts')
                 # page shows "wants to see" % instead of audience score
+                puts 'skipping audience score - page shows "wants to see" % instead'
+
                 audience_score = nil
             else
                 audience_score_string = movie_details_html.css(
@@ -73,7 +102,7 @@ class RottenTomatoesSession
             end
 
             return RottenTomatoesData.new(
-                tomato_meter: parse_percent_string(tomato_meter_string),
+                tomato_meter: tomato_meter,
                 audience_score: audience_score
             )
         end
