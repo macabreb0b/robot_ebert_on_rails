@@ -40,19 +40,20 @@ namespace :box_office do
                 next
             end
 
-            begin
-                # TODO - handle case where release date is different from "year"
-                # see "Leap! (2016)"
-                omdb_data = OMDBSession.get_movie_data(bomojo_data.title)
-            rescue ArgumentError => e
-                puts e
-                next
-            rescue
-                puts "skipping box office day for #{bomojo_data.title}"
-                next
-            end
-
             if !movie
+                begin
+                    # TODO - handle case where release date is different from "year"
+                    # see "Leap! (2016)"
+                    omdb_data = OMDBSession.get_movie_data(bomojo_data.title)
+                rescue ArgumentError => e
+                    puts "ArgumentError - skipping movie: #{bomojo_data.title}"
+                    puts e
+                    next
+                rescue
+                    puts "OMDBError - skipping movie: #{bomojo_data.title}"
+                    next
+                end
+
                 movie = Movie.new(
                     title: bomojo_data.title,
                     bomojo_id: bomojo_data.bomojo_id,
@@ -71,7 +72,8 @@ namespace :box_office do
                 )
             rescue OpenURI::HTTPError => e
                 puts "skipping imdb for #{movie.title}"
-                next
+                # return blank IMDBData object
+                imdb_data = IMDBData.new
             end
 
             rotten_tomatoes_data = RottenTomatoesSession.get_movie_data(
@@ -101,7 +103,7 @@ namespace :box_office do
                 elsif bomojo_data.rank < movie.box_office_data['best_rank']
                     movie.box_office_data['best_rank'] = bomojo_data.rank
 
-                elsif bomojo_data.rank == movie.best_box_office_rank
+                elsif bomojo_data.rank == movie.box_office_data['best_rank']
                     movie.box_office_data['days_at_best_rank'] += 1
                 end
             end

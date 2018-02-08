@@ -27,12 +27,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_logged_in
-    unless current_user
-      render json: { base: ['invalid credentials'] }, status: 401
-    end
+    render json: {base: ['invalid credentials']}, status: 401 unless current_user
   end
 
   def validate_current_user_owns(thing)
-    render json: { base: ['Unauthorized'] }, status: 401 unless current_user && thing.user.id == current_user.id
+    render json: {base: ['Unauthorized']}, status: 401 unless current_user && thing.user.id == current_user.id
   end
 end

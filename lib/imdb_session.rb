@@ -23,10 +23,17 @@ def parse_imdb_rating(rating_string)
         return nil
     end
 end
+
+def parse_imdb_vote_count(vote_count_string)
+    begin
+        return Integer(vote_count_string.delete(','))
+    rescue ArgumentError
+        return nil
+    end
+end
+
 class IMDBSession
     def self.get_movie_data(imdb_id)
-        movies_for_day = []
-
         response = open(imdb_movie_details_url(imdb_id))
         movie_details_html = Nokogiri::HTML(response)
 
@@ -46,8 +53,8 @@ class IMDBSession
 
         return IMDBData.new(
             imdb_rating: parse_imdb_rating(imdb_rating),
-            imdb_vote_count: imdb_vote_count,
-            metacritic_rating: metacritic_rating
+            imdb_vote_count: parse_imdb_vote_count(imdb_vote_count),
+            metacritic_rating: metacritic_rating.empty? ? nil : Integer(metacritic_rating)
         )
     end
 end
