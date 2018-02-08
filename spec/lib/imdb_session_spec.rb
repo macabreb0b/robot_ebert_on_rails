@@ -8,7 +8,7 @@ describe 'IMDBSession::get_movie_data' do
     imdb_data = IMDBSession.get_movie_data(robocop_2_imdb_id)
 
     expect(imdb_data.imdb_rating).to eq(58)
-    expect(imdb_data.imdb_vote_count).to eq(70257)
+    expect(imdb_data.imdb_vote_count).to be >= 70257
     expect(imdb_data.metacritic_rating).to be nil
   end
 
@@ -19,7 +19,7 @@ describe 'IMDBSession::get_movie_data' do
 
     expect(imdb_data.imdb_rating).to eq(69)
     # TODO: how do I test this if it changes over time.. could test > x
-    expect(imdb_data.imdb_vote_count).to eq(198783)
+    expect(imdb_data.imdb_vote_count).to be >= 198783
     expect(imdb_data.metacritic_rating).to eq(62)
   end
 end
