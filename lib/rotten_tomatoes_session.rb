@@ -1,7 +1,5 @@
 require 'open-uri'
 
-
-
 RottenTomatoesData = KwStruct.new(
   :tomato_meter,
   :audience_score
@@ -31,19 +29,15 @@ def rotten_tomatoes_urls_to_try(
 
   snake_case_title = to_snake_case(parsed_title)
 
-  urls_to_try = if parsed_year
-    [
-      rotten_tomatoes_url(snake_case_title, parsed_year)
-    ]
-                else
-    [
-      rotten_tomatoes_url(snake_case_title, Date.today.year),
-      # handle case where movie came out last year (e.g., today is January 1st)
-      rotten_tomatoes_url(snake_case_title, Date.today.year - 1)
-    ]
-                end
+  urls_with_years = parsed_year ? [
+    rotten_tomatoes_url(snake_case_title, parsed_year)
+  ] : [
+    rotten_tomatoes_url(snake_case_title, Date.today.year),
+    # handle case where movie came out last year (e.g., today is January 1st)
+    rotten_tomatoes_url(snake_case_title, Date.today.year - 1)
+  ]
 
-  return urls_to_try + [
+  return urls_with_years + [
     rotten_tomatoes_url(snake_case_title)
   ]
 end
