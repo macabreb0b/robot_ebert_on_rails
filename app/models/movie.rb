@@ -23,11 +23,7 @@ class Movie < ApplicationRecord
         class_name: 'BoxOfficeDay'
     )
 
-    def user_has_seen
+    def user_has_seen; end
 
-    end
-
-    def user_has_bookmarked
-
-    end
+    def user_has_bookmarked; end
 end

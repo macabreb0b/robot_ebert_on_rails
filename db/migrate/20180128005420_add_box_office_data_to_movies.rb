@@ -10,9 +10,9 @@ class AddBoxOfficeDataToMovies < ActiveRecord::Migration[5.1]
       days_at_best_box_office_rank = box_office_ranks.count(lowest_rank)
 
       movie.update(box_office_data: {
-        best_rank: box_office_ranks.min,
-        days_at_best_rank: days_at_best_box_office_rank,
-      })
+                     best_rank: box_office_ranks.min,
+                     days_at_best_rank: days_at_best_box_office_rank
+                   })
     end
   end
 end
