@@ -27,27 +27,26 @@ def rotten_tomatoes_urls_to_try(
 )
   parsed_title, parsed_year = parse_title_and_year(title_string)
 
-  snake_case_title = to_snake_case(parsed_title)
-
   urls_with_years = parsed_year ? [
-    rotten_tomatoes_url(snake_case_title, parsed_year)
+    rotten_tomatoes_url(parsed_title, parsed_year)
   ] : [
-    rotten_tomatoes_url(snake_case_title, Date.today.year),
+    rotten_tomatoes_url(parsed_title, Date.today.year),
     # handle case where movie came out last year (e.g., today is January 1st)
-    rotten_tomatoes_url(snake_case_title, Date.today.year - 1)
+    rotten_tomatoes_url(parsed_title, Date.today.year - 1)
   ]
 
   return urls_with_years + [
-    rotten_tomatoes_url(snake_case_title)
+    rotten_tomatoes_url(parsed_title)
   ]
 end
 
-def rotten_tomatoes_url(movie_alias, year: nil)
-  url_with_alias = "https://www.rottentomatoes.com/m/#{movie_alias}"
+def rotten_tomatoes_url(parsed_title, year=nil)
+  snake_case_title = to_snake_case(parsed_title)
+
+  url_with_alias = "https://www.rottentomatoes.com/m/#{snake_case_title}"
 
   return year ? url_with_alias + "_#{year}" : url_with_alias
 end
-
 
 def parse_percent_string(number_string)
   return Integer(number_string.gsub(/[\%]/, ''))

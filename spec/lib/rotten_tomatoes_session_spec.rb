@@ -38,13 +38,24 @@ end
 describe '#rotten_tomatoes_urls_to_try' do
   context 'when title contains year' do
     it 'only guesses (1) year from title and (2) no year' do
-      raise
+      result = rotten_tomatoes_urls_to_try('Robocop (2014)')
+
+      expect(result).to eq([
+                             'https://www.rottentomatoes.com/m/robocop_2014',
+                             'https://www.rottentomatoes.com/m/robocop'
+                           ])
     end
   end
 
   context 'when title does not contain year' do
     it 'guesses 2 recent years then no year' do
-      raise
+      result = rotten_tomatoes_urls_to_try('Robocop')
+
+      expect(result).to eq([
+                             "https://www.rottentomatoes.com/m/robocop_#{Date.today.year}",
+                             "https://www.rottentomatoes.com/m/robocop_#{Date.today.year - 1}",
+                             'https://www.rottentomatoes.com/m/robocop'
+                           ])
     end
   end
 end
@@ -52,13 +63,15 @@ end
 describe '#rotten_tomatoes_url' do
   context 'when called with year' do
     it 'generates url with year' do
-      raise
+      result = rotten_tomatoes_url('Robocop', 2014)
+      expect(result).to eq('https://www.rottentomatoes.com/m/robocop_2014')
     end
   end
 
   context 'when called without year' do
     it 'generates url without year' do
-      raise
+      result = rotten_tomatoes_url('Robocop')
+      expect(result).to eq('https://www.rottentomatoes.com/m/robocop')
     end
   end
 end
