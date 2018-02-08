@@ -3,110 +3,117 @@ require 'open-uri'
 
 
 RottenTomatoesData = KwStruct.new(
-    :tomato_meter,
-    :audience_score
+  :tomato_meter,
+  :audience_score
 )
 
 def parse_title_and_year(bomojo_title)
-    match_regex_title_year = /(?<title>.+)\s\((?<year>[12][0-9]{3})\)/.match(bomojo_title)
-    if match_regex_title_year
-        return [
-            match_regex_title_year.named_captures['title'],
-            Integer(match_regex_title_year.named_captures['year'])
-        ]
-    else
-        return bomojo_title, nil # no year indicated in title
-    end
+  match_regex_title_year = /(?<title>.+)\s\((?<year>[12][0-9]{3})\)/.match(bomojo_title)
+  if match_regex_title_year
+    return [
+      match_regex_title_year.named_captures['title'],
+      Integer(match_regex_title_year.named_captures['year'])
+    ]
+  else
+    return bomojo_title, nil # no year indicated in title
+  end
 end
 
 def to_snake_case(string)
-    stripped_string = string.gsub(/[^a-zA-Z0-9\s]/, '')
-    return stripped_string.gsub(' ', '_').downcase
+  stripped_string = string.gsub(/[^a-zA-Z0-9\s]/, '')
+  return stripped_string.gsub(' ', '_').downcase
 end
 
 def rotten_tomatoes_urls_to_try(
-    title_string
+  title_string
 )
-    parsed_title, parsed_year = parse_title_and_year(title_string)
+  parsed_title, parsed_year = parse_title_and_year(title_string)
 
-    snake_case_title = to_snake_case(parsed_title)
+  snake_case_title = to_snake_case(parsed_title)
 
-    if parsed_year
-        snake_case_title_plus_parsed_year = snake_case_title + "_#{parsed_year}"
-        return [
-            rotten_tomatoes_url(snake_case_title_plus_parsed_year),
-            rotten_tomatoes_url(snake_case_title)
-        ]
-    end
-
-    snake_case_title_plus_this_year = snake_case_title + "_#{Date.today.year}"
-
-    # handle case where movie came out last year (e.g., today is January 1st)
-    snake_case_title_plus_last_year = snake_case_title + "_#{Date.today.year - 1}"
-
-    return [
-        rotten_tomatoes_url(snake_case_title_plus_this_year),
-        rotten_tomatoes_url(snake_case_title_plus_last_year),
-        rotten_tomatoes_url(snake_case_title)
+  urls_to_try = if parsed_year
+    [
+      rotten_tomatoes_url(snake_case_title, parsed_year)
     ]
+                else
+    [
+      rotten_tomatoes_url(snake_case_title, Date.today.year),
+      # handle case where movie came out last year (e.g., today is January 1st)
+      rotten_tomatoes_url(snake_case_title, Date.today.year - 1)
+    ]
+                end
+
+  return urls_to_try + [
+    rotten_tomatoes_url(snake_case_title)
+  ]
 end
 
-def rotten_tomatoes_url(movie_alias)
-    return "https://www.rottentomatoes.com/m/#{movie_alias}"
+def rotten_tomatoes_url(movie_alias, year: nil)
+  url_with_alias = "https://www.rottentomatoes.com/m/#{movie_alias}"
+
+  return year ? url_with_alias + "_#{year}" : url_with_alias
 end
 
 
 def parse_percent_string(number_string)
-    return Integer(number_string.gsub(/[\%]/, ''))
+  return Integer(number_string.gsub(/[\%]/, ''))
+end
+
+def get_tomato_meter_from_markup(html_markup)
+  tomato_meter_string = html_markup.css(
+    '#all-critics-numbers .critic-score .meter-value'
+  ).text
+
+  if tomato_meter_string == ''
+    if html_markup.css('#all-critics-numbers .noReviewText').length == 1
+      puts 'skipping tomatometer - 0 critic reviews available'
+    else
+      # if we hit this case, could be an edge case or could be that the HTML on the page changed
+      puts 'skipping tomatometer - unknown error (check HTML changed)'
+    end
+
+    nil
+  else
+    parse_percent_string(tomato_meter_string)
+  end
+end
+
+def get_audience_score_from_markup(html_markup)
+  if html_markup.css('.audience-score .wts')
+    # page shows "wants to see" % instead of audience score
+    puts 'skipping audience score - page shows "wants to see" % instead'
+
+    nil
+  else
+    audience_score_string = html_markup.css(
+      '.audience-score .meter-value'
+    ).text
+
+    parse_percent_string(audience_score_string)
+  end
 end
 
 class RottenTomatoesSession
-    def self.get_movie_data(bomojo_title)
-        rotten_tomatoes_urls_to_try(bomojo_title).each do |url|
-            begin
-                response = open(url)
-            rescue OpenURI::HTTPError => e
-                next
-            end
+  def self.get_movie_data(bomojo_title)
+    rotten_tomatoes_urls_to_try(bomojo_title).each do |url|
+      begin
+        response = open(url)
+      rescue OpenURI::HTTPError => e
+        next
+      end
 
-            movie_details_html = Nokogiri::HTML(response)
+      movie_details_html = Nokogiri::HTML(response)
 
-            tomato_meter_string = movie_details_html.css(
-                '#all-critics-numbers .critic-score .meter-value'
-            ).text
-
-            if tomato_meter_string == ''
-                tomato_meter = nil
-
-                if movie_details_html.css('#all-critics-numbers .noReviewText').length == 1
-                    puts 'skipping tomatometer - 0 critic reviews available'
-                else
-                    # if we hit this case, could be an edge case or could be that the HTML on the page changed
-                    puts 'skipping tomatometer - unknown error (check HTML changed)'
-                end
-            else
-                tomato_meter = parse_percent_string(tomato_meter_string)
-            end
-
-
-            if movie_details_html.css('.audience-score .wts')
-                # page shows "wants to see" % instead of audience score
-                puts 'skipping audience score - page shows "wants to see" % instead'
-
-                audience_score = nil
-            else
-                audience_score_string = movie_details_html.css(
-                    '.audience-score .meter-value'
-                ).text
-                audience_score = parse_percent_string(audience_score_string)
-            end
-
-            return RottenTomatoesData.new(
-                tomato_meter: tomato_meter,
-                audience_score: audience_score
-            )
-        end
-
-        return RottenTomatoesData.new
+      return RottenTomatoesData.new(
+        tomato_meter: get_tomato_meter_from_markup(
+          movie_details_html
+        ),
+        audience_score: get_audience_score_from_markup(
+          movie_details_html
+        )
+      )
     end
+
+    return RottenTomatoesData.new
+  end
 end
