@@ -63,6 +63,7 @@ GEM
       xpath (>= 2.0, < 4.0)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
+    climate_control (0.2.0)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -248,6 +249,7 @@ DEPENDENCIES
   binding_of_caller
   byebug
   capybara (~> 2.13)
+  climate_control
   coffee-rails (~> 4.2)
   database_cleaner
   factory_girl_rails

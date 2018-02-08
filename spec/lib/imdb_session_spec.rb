@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'imdb_session'
 
 describe 'IMDBSession::get_movie_data' do
-  it 'gets data about old movie' do
+  it 'gets data about old movie !external' do
     robocop_2_imdb_id = 'tt0100502'
 
     imdb_data = IMDBSession.get_movie_data(robocop_2_imdb_id)
@@ -12,7 +12,7 @@ describe 'IMDBSession::get_movie_data' do
     expect(imdb_data.metacritic_rating).to be nil
   end
 
-  it 'gets data about new(ish) movie' do
+  it 'gets data about new(ish) movie !external' do
     disturbia_imdb_id = 'tt0486822'
 
     imdb_data = IMDBSession.get_movie_data(disturbia_imdb_id)
