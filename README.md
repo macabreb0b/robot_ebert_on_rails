@@ -15,3 +15,8 @@
 * [x] allow user to signup and login
 * [ ] allow user to mark movies as "seen" / "favorited"
 * [ ] resolve issue with scraper not grabbing data for some movies (could be from some studios not reporting numbers at the same time?)
+
+## runbook:
+bundle install
+rake assets:precompile
+rails s
