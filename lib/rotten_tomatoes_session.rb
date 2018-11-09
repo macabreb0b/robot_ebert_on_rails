@@ -24,9 +24,7 @@ def to_snake_case(string)
   return stripped_string.gsub(' ', '_').downcase
 end
 
-def rotten_tomatoes_urls_to_try(
-  title_string
-)
+def rotten_tomatoes_urls_to_try(title_string)
   parsed_title, parsed_year = parse_title_and_year(title_string)
 
   snake_case_title = to_snake_case(parsed_title)

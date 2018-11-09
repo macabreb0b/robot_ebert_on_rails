@@ -15,8 +15,12 @@
 
 /node_modules
 /yarn-error.log
+
+# Ignore build stuff
 bundle.js
 bundle.js.map
+/public/assets/*
+/app/assets/stylesheets/build.css
 
 .byebug_history
 .DS_Store
