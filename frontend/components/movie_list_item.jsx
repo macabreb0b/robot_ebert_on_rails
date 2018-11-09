@@ -51,12 +51,10 @@ export class MovieListItem extends React.Component {
                 key={this.props.movie.bomojo_id}
                 onClick={this.handleOnClick}
             >
-
                 <div className='FlexItem u-flexExpandRight'>
                     <div
                         className='movie-list-card_title'
                     >
-
                         <Link to={`/movies/${this.props.movie.id}`}>
                             {this.props.movie.title}
                         </Link>
@@ -64,16 +62,11 @@ export class MovieListItem extends React.Component {
                 </div>
                 <div className='FlexItem'>
                     <div className='u-flex u-flexCol u-flexAlignItemsCenter'>
-
                         <div className='FlexItem'>
-                            <div className='u-flex u-flexRow u-flexJustifyAround'>
-                                <div className='FlexItem'>
-                                    {_renderIconSeenIt(false)}
-                                </div>
-                                <div className='FlexItem'>
-                                    {_renderIconBookmarked(false)}
-                                </div>
-                            </div>
+                            {_renderIconBookmarked(this.props.movie.is_favorited)}
+                        </div>
+                        <div className='FlexItem'>
+                            {_renderIconSeenIt(this.props.movie.is_viewed)}
                         </div>
 
                         <div className='FlexItem u-flexExpand'>

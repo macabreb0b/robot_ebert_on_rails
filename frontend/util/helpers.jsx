@@ -26,8 +26,8 @@ export function _renderIconBookmarked(isBookmarked) {
             <i className="fa fa-star" aria-hidden="true"></i>
         </div>
     ) : (
-        <div className='chunky-icon' title="Click to add to Favorites">
-            <i className="fa fa-star-o" aria-hidden="true"></i>
+        <div className='chunky-icon chunky-icon-fade' title="Click to add to Favorites">
+            <i className="fa fa-star" aria-hidden="true"></i>
         </div>
     )
 }
@@ -38,10 +38,8 @@ export function _renderIconSeenIt(isSeen) {
             <i className="fa fa-eye" aria-hidden="true"></i>
         </div>
     ) : (
-        <div className='chunky-icon' title="Click to mark as Seen">
-            <span className='seen-it-no'>
-                <i className="fa fa-eye-slash" aria-hidden="true"></i>
-            </span>
+        <div className='chunky-icon chunky-icon-fade' title="Click to mark as Seen">
+            <i className="fa fa-eye-slash" aria-hidden="true"></i>
         </div>
     )
 }

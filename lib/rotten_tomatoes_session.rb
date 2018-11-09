@@ -48,7 +48,7 @@ def rotten_tomatoes_urls_to_try(
   ]
 end
 
-def rotten_tomatoes_url(movie_alias, year: nil)
+def rotten_tomatoes_url(movie_alias, year=nil)
   url_with_alias = "https://www.rottentomatoes.com/m/#{movie_alias}"
 
   return year ? url_with_alias + "_#{year}" : url_with_alias

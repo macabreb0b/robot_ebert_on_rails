@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181108234808) do
+ActiveRecord::Schema.define(version: 20181109010954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,22 @@ ActiveRecord::Schema.define(version: 20181108234808) do
     t.datetime "updated_at", null: false
     t.integer "tomato_audience_score"
     t.index ["movie_id", "day"], name: "index_box_office_days_on_movie_id_and_day", unique: true
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id", "user_id"], name: "index_favorites_on_movie_id_and_user_id", unique: true
+  end
+
+  create_table "movie_views", force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id", "user_id"], name: "index_movie_views_on_movie_id_and_user_id", unique: true
   end
 
   create_table "movies", force: :cascade do |t|

@@ -23,7 +23,11 @@ class Movie < ApplicationRecord
         class_name: 'BoxOfficeDay'
     )
 
-    def user_has_seen; end
+    def user_has_favorited?(user_id)
+        User.find(user_id).favorite_movies.include?(self)
+    end
 
-    def user_has_bookmarked; end
+    def user_has_viewed?(user_id)
+        User.find(user_id).viewed_movies.include?(self)
+    end
 end

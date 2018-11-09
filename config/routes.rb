@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
-  namespace :api, defaults: {format: :json} do 
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+  }
+
+  namespace :api, defaults: {format: :json} do
     resources :movies, only: [:index, :show]
-    
+
     get 'timeline', to: 'box_office_days#timeline'
   end
 
