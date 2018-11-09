@@ -22,11 +22,11 @@ export function _renderBoxOfficeDay(day, movieReleaseDay) {
 
 export function _renderIconBookmarked(isBookmarked) {
     return isBookmarked ? (
-        <div className='chunky-icon' title="Click to remove from Favorites">
+        <div className='chunky-icon u-color-gold' title="Click to remove from Favorites">
             <i className="fa fa-star" aria-hidden="true"></i>
         </div>
     ) : (
-        <div className='chunky-icon chunky-icon-fade' title="Click to add to Favorites">
+        <div className='chunky-icon u-fade' title="Click to add to Favorites">
             <i className="fa fa-star" aria-hidden="true"></i>
         </div>
     )
@@ -34,11 +34,11 @@ export function _renderIconBookmarked(isBookmarked) {
 
 export function _renderIconSeenIt(isSeen) {
     return isSeen ? (
-        <div className='chunky-icon' title="Click to mark as Not Seen" >
+        <div className='chunky-icon u-color-blue' title="Click to mark as Not Seen" >
             <i className="fa fa-eye" aria-hidden="true"></i>
         </div>
     ) : (
-        <div className='chunky-icon chunky-icon-fade' title="Click to mark as Seen">
+        <div className='chunky-icon u-fade' title="Click to mark as Seen">
             <i className="fa fa-eye-slash" aria-hidden="true"></i>
         </div>
     )

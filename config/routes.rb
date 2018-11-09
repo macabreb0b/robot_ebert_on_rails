@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     resources :movies, only: [:index, :show]
 
+    post '/movies/:id/favorite', to: 'movies#post_favorite'
+    delete '/movies/:id/favorite', to: 'movies#delete_favorite'
+    post '/movies/:id/view', to: 'movies#post_movie_view'
+    delete '/movies/:id/view', to: 'movies#delete_movie_view'
+
     get 'timeline', to: 'box_office_days#timeline'
   end
 

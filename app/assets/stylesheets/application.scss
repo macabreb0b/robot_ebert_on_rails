@@ -23,7 +23,7 @@ $text-color-visited: #dadad9;
 $background-color: #2b2b2b;
 $white: #fff;
 $table-text-color: #3b3b3b;
-$header-height: 57.5px;
+$header-height: 76px;
 $red: red;
 $blue: blue;
 $purple: purple;
@@ -43,6 +43,10 @@ $frontmost: 1000;
 
 .u-pseudolink {
   cursor: pointer;
+}
+
+.user-nav {
+  color: white;
 }
 
 .header--fixed {
@@ -351,6 +355,14 @@ $header-row-background-color: #ea6153;
   text-align: center;
 }
 
-.chunky-icon-fade {
+.u-fade {
   opacity: .6;
+}
+
+.u-color-gold {
+  color: gold;
+}
+
+.u-color-blue {
+  color: blue;
 }

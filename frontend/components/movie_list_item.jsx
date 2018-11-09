@@ -34,11 +34,33 @@ export class MovieListItem extends React.Component {
             redirect: false
         }
 
-        this.handleOnClick = this.handleOnClick.bind(this);
+        this.handleClickListItem = this.handleClickListItem.bind(this);
+        this.handleClickFavorite = this.handleClickFavorite.bind(this);
+        this.handleClickViewed = this.handleClickViewed.bind(this);
     }
 
-    handleOnClick(event) {
-        this.setState({redirect: true})
+    handleClickListItem(event) {
+        this.setState({ redirect: true })
+    }
+
+    handleClickFavorite(event) {
+        event.stopPropagation();
+
+        if (this.props.movie.is_favorited) {
+            this.props.markMovieAsNotFavorite(this.props.movie.id);
+        } else {
+            this.props.markMovieAsFavorite(this.props.movie.id);
+        }
+    }
+
+    handleClickViewed(event) {
+        event.stopPropagation();
+
+        if (this.props.movie.is_viewed) {
+            this.props.markMovieAsNotViewed(this.props.movie.id);
+        } else {
+            this.props.markMovieAsViewed(this.props.movie.id);
+        }
     }
 
     render() {
@@ -49,7 +71,7 @@ export class MovieListItem extends React.Component {
             <div
                 className='movie-list-card u-flex u-flexRow u-flexAlignItemsCenter u-pseudolink'
                 key={this.props.movie.bomojo_id}
-                onClick={this.handleOnClick}
+                onClick={this.handleClickListItem}
             >
                 <div className='FlexItem u-flexExpandRight'>
                     <div
@@ -62,14 +84,20 @@ export class MovieListItem extends React.Component {
                 </div>
                 <div className='FlexItem'>
                     <div className='u-flex u-flexCol u-flexAlignItemsCenter'>
-                        <div className='FlexItem'>
+                        <div
+                            className='FlexItem'
+                            onClick={this.handleClickFavorite}
+                        >
                             {_renderIconBookmarked(this.props.movie.is_favorited)}
                         </div>
-                        <div className='FlexItem'>
+                        <div
+                            className='FlexItem'
+                            onClick={this.handleClickViewed}
+                        >
                             {_renderIconSeenIt(this.props.movie.is_viewed)}
                         </div>
 
-                        <div className='FlexItem u-flexExpand'>
+                        <div className='FlexItem'>
                             <div className='rank-container'>
                                 {_renderBestBoxOfficeRanks(this.props.movie)}
                             </div>

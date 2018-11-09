@@ -7,8 +7,24 @@
     <%# responsive style %>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+
+    <% if user_signed_in? %>
+      <script type="text/javascript">
+          window.currentUserId = <%= current_user ? current_user.id : nil %>
+      </script>
+    <% end %>
+
+    <script type="text/javascript">
+      $(function() {
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+      });
+    </script>
   </head>
 
   <body>
