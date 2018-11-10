@@ -11,13 +11,44 @@ function _renderIMDBUrl(id) {
 
 
 class MovieShow extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.handleClickFavorite = this.handleClickFavorite.bind(this);
+        this.handleClickViewed = this.handleClickViewed.bind(this);
+    }
+
     componentDidMount() {
         if (this.props.movie.box_office_days == undefined) {
             this.props.fetchMovie(this.props.movieId);
         }
     }
 
+    handleClickFavorite(event) {
+        event.stopPropagation();
+
+        if (this.props.movie.is_favorited) {
+            this.props.markMovieAsNotFavorite(this.props.movie.id);
+        } else {
+            this.props.markMovieAsFavorite(this.props.movie.id);
+        }
+    }
+
+    handleClickViewed(event) {
+        event.stopPropagation();
+
+        if (this.props.movie.is_viewed) {
+            this.props.markMovieAsNotViewed(this.props.movie.id);
+        } else {
+            this.props.markMovieAsViewed(this.props.movie.id);
+        }
+    }
+
+
     render() {
+        const { movie } = this.props;
+
         const color = '#4DAF7C';
         let boxOfficeDayRows = (
             <tr>
@@ -29,15 +60,15 @@ class MovieShow extends React.Component {
 
         let sortedBoxOfficeDays = [];
 
-        if (this.props.movie.box_office_days) {
-            sortedBoxOfficeDays = this.props.movie.box_office_days.sort(function(a, b) {
+        if (movie.box_office_days) {
+            sortedBoxOfficeDays = movie.box_office_days.sort(function(a, b) {
                 return new Date(a.day) - new Date(b.day);
             })
             boxOfficeDayRows = sortedBoxOfficeDays.map((boxOfficeDay) => {
                 return (
                     <tr className='row' key={boxOfficeDay.id}>
                         <td className='cell u-nowrap'>
-                            {_renderBoxOfficeDay(boxOfficeDay.day, this.props.movie.release_date)}
+                            {_renderBoxOfficeDay(boxOfficeDay.day, movie.release_date)}
                         </td>
                         <td className='cell u-text--right'>
                             {boxOfficeDay.metacritic_score}
@@ -72,19 +103,27 @@ class MovieShow extends React.Component {
                     <div className='u-flex u-flexAlignItemsCenter'>
                         <div className="FlexItem u-flexGrow1">
                         <h2>
-                            {this.props.movie.title || "\u00a0"}
+                            {movie.title || "\u00a0"}
                         </h2>
                         </div>
-                        <div className="FlexItem u-flexGrow1 u-flexInitial" style={{width: 40}}>
-                            {_renderIconSeenIt(false)}
+                        <div
+                            className="FlexItem u-flexGrow1 u-flexInitial"
+                            onClick={this.handleClickViewed}
+                            style={{width: 40}}
+                        >
+                            {_renderIconSeenIt(movie.is_viewed)}
                         </div>
-                        <div className="FlexItem u-flexGrow1 u-flexInitial" style={{width: 40}}>
-                            {_renderIconBookmarked(false)}
+                        <div
+                            className="FlexItem u-flexGrow1 u-flexInitial"
+                            onClick={this.handleClickFavorite}
+                            style={{width: 40}}
+                        >
+                            {_renderIconBookmarked(movie.is_favorited)}
                         </div>
                     </div>
                 </div>
                 <a
-                    href={_renderIMDBUrl(this.props.movie.imdb_id)}
+                    href={_renderIMDBUrl(movie.imdb_id)}
                     target="_blank">
                     view on imdb <i className="fa fa-external-link" aria-hidden="true"></i>
                 </a>
@@ -92,21 +131,21 @@ class MovieShow extends React.Component {
                     <div>
                         <span className='label'>Year:</span>
                         {' '}
-                        <strong>{this.props.movie.year}</strong>
+                        <strong>{movie.year}</strong>
                     </div>
                     <div>
                         <span className='label'>Release date:</span>
                         {' '}
-                        <strong>{this.props.movie.release_date}</strong>
+                        <strong>{movie.release_date}</strong>
                     </div>
                     <div>
                         <span className='label'>Rating:</span>
                         {' '}
-                        <strong>{this.props.movie.mpaa_rating}</strong>
+                        <strong>{movie.mpaa_rating}</strong>
                     </div>
 
                     <BoxOfficeChartContainer
-                        movie={this.props.movie}
+                        movie={movie}
                         boxOfficeDays={sortedBoxOfficeDays} />
 
                     <table className='table box-office-days'>

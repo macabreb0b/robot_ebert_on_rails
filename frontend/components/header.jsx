@@ -34,6 +34,7 @@ class Header extends React.Component {
                                 </Link>
                             </div>
                         </div>
+
                         <div className='FlexItem'>
                             <div className='flex_content'>
                                 <NavLink
@@ -45,6 +46,7 @@ class Header extends React.Component {
                                 </NavLink>
                             </div>
                         </div>
+
                         <div className='FlexItem'>
                             <div className='flex_content'>
                                 <NavLink
