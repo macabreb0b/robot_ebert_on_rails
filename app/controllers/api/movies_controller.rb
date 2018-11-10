@@ -6,6 +6,10 @@ def _format_movie_json(movie, current_user, include_box_office_days=false)
         movie_json[:is_viewed] = movie.user_has_viewed? current_user.id
     end
 
+    if include_box_office_days
+        movie_json[:box_office_days] = movie.box_office_days.as_json
+    end
+
     return movie_json
 end
 
