@@ -16,5 +16,7 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#root'
   get 'timeline', to: 'static_pages#root'
+  get 'starred', to: 'static_pages#root'
+  get 'watched', to: 'static_pages#root'
   get 'movies/:id', to: 'static_pages#root'
 end

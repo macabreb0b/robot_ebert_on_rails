@@ -1,13 +1,25 @@
-export const asSortedArray = ({ movies }) => (
-    Object.keys(movies).map(key => movies[key]).sort(function(a, b) {
+export const sortMoviesByReleaseDate = (moviesArr) => (
+    moviesArr.sort(function(a, b) {
         if (a.release_date > b.release_date) {
-            return 1
+            return 1;
         }
 
         if (a.release_date < b.release_date) {
-            return -1
+            return -1;
         }
 
-        return 0
+        return 0;
     }).reverse()
+);
+
+export const userFavoriteMovies = ({ movies }) => (
+    sortMoviesByReleaseDate(Object.values(movies).filter(movie => (
+        movie.is_favorited
+    )))
+);
+
+export const userViewedMovies = ({ movies }) => (
+    sortMoviesByReleaseDate(Object.values(movies).filter(movie => (
+        movie.is_viewed
+    )))
 );

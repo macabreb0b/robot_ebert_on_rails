@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MovieListItemContainer from './movie_list_item_container';
+
+import MovieList from './movie_list';
 
 function _fuzzyMatchItem(query, stringToMatch) {
     const regexSafeQuery = query.replace(/[^A-Za-z0-9]/g, '')
@@ -43,11 +44,6 @@ export class MovieIndex extends React.Component {
 
     render() {
         const matchedMovies = _fuzzyMatchList(this.state.query, this.props.movies);
-        const movieListItems = matchedMovies.map((movie) => {
-            return (
-                <MovieListItemContainer movie={movie} key={movie.id}/>
-            )
-        })
 
         return (
             <div className="wrapper">
@@ -59,9 +55,7 @@ export class MovieIndex extends React.Component {
                     value={this.state.query}
                     className='filter-movies_input'/>
 
-                <div className='movie-list'>
-                    {movieListItems}
-                </div>
+                <MovieList movies={matchedMovies} />
             </div>
         );
     }

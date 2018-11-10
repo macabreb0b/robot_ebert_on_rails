@@ -16,7 +16,7 @@ export const receiveMovie = movie => ({
 
 export const didFetchMovies = () => ({
     type: DID_FETCH_MOVIES,
-})
+});
 
 export const fetchMovies = filters => dispatch => {
     dispatch(didFetchMovies);

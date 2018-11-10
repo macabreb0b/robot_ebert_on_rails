@@ -11,6 +11,8 @@ import {
 
 import HeaderContainer from './header_container';
 import MovieShowContainer from './movie_show_container';
+import FavoriteMoviesContainer from './favorite_movies_container';
+import ViewedMoviesContainer from './viewed_movies_container';
 import MovieIndexContainer from './movie_index_container';
 import BoxOfficeTimelineContainer from './box_office_timeline_container'
 
@@ -23,6 +25,8 @@ class App extends React.Component {
 
                 <Switch>
                     <Route exact path="/" component={MovieIndexContainer} />
+                    <Route exact path="/starred" component={FavoriteMoviesContainer} />
+                    <Route exact path="/watched" component={ViewedMoviesContainer} />
                     <Route path="/movies/:movieId" component={MovieShowContainer} />
                     <Route path="/timeline" component={BoxOfficeTimelineContainer} />
                 </Switch>

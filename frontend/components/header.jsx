@@ -3,6 +3,7 @@ import {
     Link,
     NavLink,
 } from 'react-router-dom';
+import { _renderIconBookmarked, _renderIconSeenIt } from '../util/helpers'
 
 class Header extends React.Component {
 
@@ -51,6 +52,28 @@ class Header extends React.Component {
                                     className='top-nav_item'
                                     to="/timeline">
                                     TIMELINE
+                                </NavLink>
+                            </div>
+                        </div>
+
+                        <div className='FlexItem'>
+                            <div className='flex_content'>
+                                <NavLink
+                                    activeClassName='active'
+                                    className='top-nav_item'
+                                    to="/starred">
+                                    <i className="fa fa-star" aria-hidden="true"></i>
+                                </NavLink>
+                            </div>
+                        </div>
+
+                        <div className='FlexItem'>
+                            <div className='flex_content'>
+                                <NavLink
+                                    activeClassName='active'
+                                    className='top-nav_item'
+                                    to="/watched">
+                                    <i className="fa fa-eye" aria-hidden="true"></i>
                                 </NavLink>
                             </div>
                         </div>
