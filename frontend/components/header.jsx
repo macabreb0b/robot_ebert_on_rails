@@ -8,7 +8,7 @@ import { _renderIconBookmarked, _renderIconSeenIt } from '../util/helpers'
 class Header extends React.Component {
 
     postSignOut() {
-        console.log('postSignOut')
+        console.log('postSignOut') // TODO
     }
 
     render() {
